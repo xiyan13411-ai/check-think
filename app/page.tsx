@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import GoalCard from "@/components/GoalCard";
-import WishObjectView from "@/components/WishObjectView";
+import WishPhoneReveal from "@/components/WishPhoneReveal";
 import SavePanel from "@/components/SavePanel";
 import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
@@ -204,7 +204,7 @@ export default function Home() {
         />
 
         {/* Wish Object View */}
-        <WishObjectView
+        <WishPhoneReveal
           totalPieces={state.goal.totalPieces}
           unlockedPieces={unlockedPieces}
           currentAmount={state.goal.currentAmount}
