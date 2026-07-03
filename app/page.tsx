@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import GoalCard from "@/components/GoalCard";
 import WishHeroScene from "@/components/WishHeroScene";
  import AssetHeroScene from "@/components/AssetHeroScene";
+import FragmentedPhoneScene from "@/components/FragmentedPhoneScene";
 import SavePanel from "@/components/SavePanel";
 import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
@@ -20,8 +21,8 @@ import type { AppState } from "@/types/app-state";
 import type { SavingRecord } from "@/types/record";
 import type { Achievement } from "@/types/achievement";
  
- // Toggle: "asset" = AssetHeroScene (V5), "svg" = WishHeroScene (V4)
- const HERO_MODE: "asset" | "svg" = "asset";
+// Toggle: "fragmented" = FragmentedPhoneScene (V7), "asset" = AssetHeroScene (V5), "svg" = WishHeroScene (V4)
+const HERO_MODE: "fragmented" | "asset" | "svg" = "fragmented";
  
 
 function generateId(): string {
@@ -196,7 +197,17 @@ export default function Home() {
   );
 
   const heroScene =
-    HERO_MODE === "asset" ? (
+    HERO_MODE === "fragmented" ? (
+      <FragmentedPhoneScene
+        totalPieces={state.goal.totalPieces}
+        unlockedPieces={unlockedPieces}
+        currentAmount={state.goal.currentAmount}
+        targetAmount={state.goal.targetAmount}
+        newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
+        warmUpNextPiece={warmUpNextPiece}
+        saveAnimation={saveAnimation}
+      />
+    ) : HERO_MODE === "asset" ? (
       <AssetHeroScene
         totalPieces={state.goal.totalPieces}
         unlockedPieces={unlockedPieces}
@@ -217,7 +228,6 @@ export default function Home() {
         saveAnimation={saveAnimation}
       />
     );
-
   return (
     <main className="safe-area-bottom min-h-screen bg-orange-50 px-4 py-6 text-stone-900">
       <div className="mx-auto flex w-full max-w-md flex-col gap-4">

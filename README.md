@@ -12,6 +12,16 @@
 
 > 🎯 V4 小红书Hero Scene 主视觉重构（当前阶段）
 
+> 🎯 V7 破碎重组式主视觉（当前阶段）
+
+✅ lib/fragmented-phone-map.ts — 20 个不规则 clip-path shards 配置
+✅ components/FragmentedPhoneScene.tsx — 单图切片+碎片重组场景
+✅ phone-render.svg — SVG 手机背面 fallback
+✅ HERO_MODE = "fragmented"（默认），回退 "asset"/"svg" 保留
+✅ /lab/assets 模式切换（fragmented / asset / svg）
+
+核心变化：手机本身由 20 块不规则碎片组成，碎片从外部飞回重组，而不是“完整手机+装饰碎片”
+
 > 🎯 V6 视觉资产生产与预览调参（当前阶段）
 
 ✅ docs/ASSET_PRODUCTION_BRIEF.md 资产生产规范

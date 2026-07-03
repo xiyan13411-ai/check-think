@@ -1,22 +1,26 @@
- "use client";
+﻿ "use client";
  
  import { useState, useCallback } from "react";
  import AssetHeroScene from "@/components/AssetHeroScene";
  import { phoneWishAssets } from "@/lib/wish-assets";
  import { formatCurrency } from "@/lib/progress";
+import FragmentedPhoneScene from "@/components/FragmentedPhoneScene";
+import WishHeroScene from "@/components/WishHeroScene";
+import { getUnlockedShardIndices } from "@/lib/fragmented-phone-map";
  
  export default function LabAssetsPage() {
    const [progress, setProgress] = useState(0.5);
    const [animKey, setAnimKey] = useState(0);
    const [animMode, setAnimMode] = useState<"warmup" | "unlock" | "complete" | null>(null);
+  const [heroMode, setHeroMode] = useState<"fragmented" | "asset" | "svg">("fragmented");
  
    const totalPieces = 40;
    const targetAmount = 10000;
    const currentAmount = Math.round(progress * targetAmount);
    const unlockedPieces = Math.floor(progress * totalPieces);
-   const visualUnlocked = phoneWishAssets.fragments.filter(
-     (f) => progress >= f.unlockAt,
-   ).length;
+  const visualUnlocked = heroMode === "fragmented"
+    ? getUnlockedShardIndices(progress).length
+    : phoneWishAssets.fragments.filter((f) => progress >= f.unlockAt).length;
  
    const triggerAnim = useCallback(
      (mode: "warmup" | "unlock" | "complete") => {
@@ -85,24 +89,69 @@
                className="min-h-[36px] flex-0 rounded-xl bg-stone-100 px-3 text-xs text-stone-400"
              >
                重置
+
+          {/* Mode selector */}
+          <div className="flex gap-2 pt-2 border-t border-stone-100">
+            {(["fragmented", "asset", "svg"] as const).map((m) => (
+              <button
+                key={m}
+                onClick={() => setHeroMode(m)}
+                className={`min-h-[30px] flex-1 rounded-lg text-[10px] font-medium transition-colors ${
+                  heroMode === m
+                    ? "bg-pink-100 text-pink-600 shadow-sm"
+                    : "bg-stone-50 text-stone-400 hover:bg-stone-100"
+                }`}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
              </button>
            </div>
          </div>
  
          {/* Hero preview */}
          <div className="mt-6">
-           <AssetHeroScene
-             totalPieces={totalPieces}
-             unlockedPieces={unlockedPieces}
-             currentAmount={currentAmount}
-             targetAmount={targetAmount}
-             warmUpNextPiece={animMode === "warmup"}
-             saveAnimation={
-               animKey > 0 && animMode
-                 ? { key: animKey, mode: animMode, count: 6 }
-                 : null
-             }
-           />
+          {heroMode === "fragmented" ? (
+            <FragmentedPhoneScene
+              totalPieces={totalPieces}
+              unlockedPieces={unlockedPieces}
+              currentAmount={currentAmount}
+              targetAmount={targetAmount}
+              warmUpNextPiece={animMode === "warmup"}
+              saveAnimation={
+                animKey > 0 && animMode
+                  ? { key: animKey, mode: animMode, count: 6 }
+                  : null
+              }
+            />
+          ) : heroMode === "asset" ? (
+            <AssetHeroScene
+              totalPieces={totalPieces}
+              unlockedPieces={unlockedPieces}
+              currentAmount={currentAmount}
+              targetAmount={targetAmount}
+              warmUpNextPiece={animMode === "warmup"}
+              saveAnimation={
+                animKey > 0 && animMode
+                  ? { key: animKey, mode: animMode, count: 6 }
+                  : null
+              }
+            />
+          ) : (
+            <WishHeroScene
+              totalPieces={totalPieces}
+              unlockedPieces={unlockedPieces}
+              currentAmount={currentAmount}
+              targetAmount={targetAmount}
+              warmUpNextPiece={animMode === "warmup"}
+              saveAnimation={
+                animKey > 0 && animMode
+                  ? { key: animKey, mode: animMode, count: 6 }
+                  : null
+              }
+            />
+          )}
          </div>
  
          {/* Fragment list */}
