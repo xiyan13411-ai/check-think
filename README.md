@@ -12,6 +12,14 @@
 
 > 🎯 V4 小红书Hero Scene 主视觉重构（当前阶段）
 
+> 🎯 V5 资产驱动主视觉基础设施（当前阶段）
+
+✅ V5 visual assets 目录结构 (public/wish-assets/phone/)
+✅ V5 lib/wish-assets.ts 碎片资产配置（14块，支持SVG fallback）
+✅ V5 AssetHeroScene — 资产驱动英雄场景组件
+✅ V5 可切换 HERO_MODE（asset / svg），不破坏现有回退路径
+✅ UX_NEXT_STEPS.md 下一轮布局重构规划
+
 ✅ V4 手机实物背面（PhoneArtifact — SVG 手机背板+镜头模组+金属边框）
 ✅ V4 外部浮动碎片（FloatingFragments — 前后景层次，碎片随进度减少）
 ✅ V4 2.5D 空间层次（背景光晕+后景模糊碎片+前景清晰碎片+主手机）

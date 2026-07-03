@@ -1,10 +1,11 @@
-"use client";
+﻿"use client";
 
  import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import GoalCard from "@/components/GoalCard";
- import WishHeroScene from "@/components/WishHeroScene";
+import WishHeroScene from "@/components/WishHeroScene";
+ import AssetHeroScene from "@/components/AssetHeroScene";
 import SavePanel from "@/components/SavePanel";
 import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
@@ -18,6 +19,10 @@ import { vibrate } from "@/lib/vibration";
 import type { AppState } from "@/types/app-state";
 import type { SavingRecord } from "@/types/record";
 import type { Achievement } from "@/types/achievement";
+ 
+ // Toggle: "asset" = AssetHeroScene (V5), "svg" = WishHeroScene (V4)
+ const HERO_MODE: "asset" | "svg" = "asset";
+ 
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
@@ -230,8 +235,29 @@ export default function Home() {
           flashAmount={flashAmount}
         />
 
-        {/* Wish Object View */}
-        <WishHeroScene
+        {HERO_MODE === "asset" ? (
+          <AssetHeroScene
+            totalPieces={state.goal.totalPieces}
+            unlockedPieces={unlockedPieces}
+            currentAmount={state.goal.currentAmount}
+            targetAmount={state.goal.targetAmount}
+            newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
+            warmUpNextPiece={warmUpNextPiece}
+            saveAnimation={saveAnimation}
+          />
+        ) : (
+          <WishHeroScene
+            totalPieces={state.goal.totalPieces}
+            unlockedPieces={unlockedPieces}
+            currentAmount={state.goal.currentAmount}
+            targetAmount={state.goal.targetAmount}
+            newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
+            warmUpNextPiece={warmUpNextPiece}
+            saveAnimation={saveAnimation}
+          />
+        )}
+        ) : (
+          <WishHeroScene
           totalPieces={state.goal.totalPieces}
           unlockedPieces={unlockedPieces}
           currentAmount={state.goal.currentAmount}
