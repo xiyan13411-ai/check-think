@@ -1,0 +1,94 @@
+"use client";
+
+import { useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+type PuzzleViewProps = {
+  totalPieces: number;
+  unlockedPieces: number;
+};
+
+export default function PuzzleView({
+  totalPieces = 40,
+  unlockedPieces,
+}: PuzzleViewProps) {
+  const pieces = useMemo(
+    () => Array.from({ length: totalPieces }, (_, i) => i),
+    [totalPieces],
+  );
+
+  return (
+    <motion.div
+      className="rounded-2xl bg-white p-5 shadow-sm"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.1 }}
+    >
+      {/* Header */}
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="text-sm font-medium text-stone-500">愿望拼图</h2>
+        <span className="text-xs text-stone-400">
+          {unlockedPieces} / {totalPieces}
+        </span>
+      </div>
+
+      {/* Puzzle grid */}
+      <div className="grid grid-cols-8 gap-1.5">
+        <AnimatePresence>
+          {pieces.map((i) => {
+            const unlocked = i < unlockedPieces;
+            const isNewlyUnlocked = i === unlockedPieces - 1 && unlockedPieces > 0;
+
+            return (
+              <motion.div
+                key={i}
+                className={`aspect-square rounded-md ${
+                  unlocked
+                    ? "bg-gradient-to-br from-pink-300 to-orange-300"
+                    : "bg-stone-100"
+                }`}
+                initial={
+                  isNewlyUnlocked
+                    ? { scale: 0, opacity: 0, rotate: -180 }
+                    : unlocked
+                      ? { scale: 1, opacity: 1 }
+                      : {}
+                }
+                animate={
+                  isNewlyUnlocked
+                    ? { scale: 1, opacity: 1, rotate: 0 }
+                    : unlocked
+                      ? { scale: 1, opacity: 1 }
+                      : { scale: 1, opacity: 1 }
+                }
+                transition={
+                  isNewlyUnlocked
+                    ? {
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 12,
+                        delay: i * 0.01,
+                      }
+                    : { duration: 0.3 }
+                }
+                whileHover={unlocked ? { scale: 1.15 } : {}}
+              />
+            );
+          })}
+        </AnimatePresence>
+      </div>
+
+      {/* Mini preview piece for recent unlocks */}
+      {unlockedPieces > 0 && unlockedPieces < totalPieces && (
+        <p className="mt-3 text-center text-xs text-stone-400">
+          已解锁 {unlockedPieces} 块碎片，还有 {totalPieces - unlockedPieces} 块等你
+        </p>
+      )}
+      {unlockedPieces >= totalPieces && (
+        <p className="mt-3 text-center text-xs font-medium text-pink-500">
+          🎉 愿望全部拼回来了！
+        </p>
+      )}
+    </motion.div>
+  );
+}
