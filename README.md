@@ -12,6 +12,15 @@
 
 > 🎯 V4 小红书Hero Scene 主视觉重构（当前阶段）
 
+> 🎯 V6 视觉资产生产与预览调参（当前阶段）
+
+✅ docs/ASSET_PRODUCTION_BRIEF.md 资产生产规范
+✅ docs/VISUAL_QA_CHECKLIST.md 视觉验收清单
+✅ app/lab/assets 开发预览调参页（slider + warmup/unlock/complete 按钮）
+✅ 当前视觉仍是 SVG fallback，后续替换 PNG 素材即可升级质感
+
+调试页：/lab/assets（仅开发使用，不加入首页导航）
+
 > 🎯 V5 资产驱动主视觉基础设施（当前阶段）
 
 ✅ V5 visual assets 目录结构 (public/wish-assets/phone/)

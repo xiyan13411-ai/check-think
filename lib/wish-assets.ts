@@ -1,23 +1,41 @@
- export type WishFragmentAsset = {
-   id: string;
-   /** Image source path (e.g. /wish-assets/phone/fragments/fragment-01.png) */
-   src: string;
-   /** SVG polygon points for fallback rendering (viewBox 0 0 200 420) */
-   fallbackPoints: string;
-   /** Target offset from phone center (x, in viewBox units) when assembled */
-   targetX: number;
-   targetY: number;
-   /** Starting offset from phone center (x) for fly-in animation */
-   startX: number;
-   startY: number;
-   /** Rotation at target (degrees) */
-   targetRotate: number;
-   /** Progress threshold (0–1) at which this fragment unlocks */
-   unlockAt: number;
-   /** Fragment width hint (px in viewBox units) */
-   width: number;
-   height: number;
- };
+﻿export type WishFragmentAsset = {
+  /** Unique identifier for this fragment */
+  id: string;
+  /** Path to the actual asset file.
+   *  If the file doesn't exist, the SVG fallback polygon will be used
+   *  instead so the scene never breaks. */
+  src: string;
+  /** SVG polygon points for inline fallback rendering.
+   *  Coordinate system: viewBox 0 0 200 420.
+   *  Used when the real PNG/SVG asset at `src` is not available. */
+  fallbackPoints: string;
+  /** Final position offset from phone center (horizontal).
+   *  When this fragment is unlocked, it sits at this x offset. */
+  targetX: number;
+  /** Final position offset from phone center (vertical). */
+  targetY: number;
+  /** Starting position offset from phone center (horizontal).
+   *  When this fragment is unlocked, it animates from (startX, startY)
+   *  toward (targetX, targetY) — simulating a piece flying back. */
+  startX: number;
+  /** Starting position offset from phone center (vertical). */
+  startY: number;
+  /** Rotation (degrees) when the fragment is at its target position. */
+  targetRotate: number;
+  /** Progress threshold 0.0–1.0.
+   *  When the overall savings progress passes this value,
+   *  this fragment changes from "floating outside" to "assembled on phone".
+   *
+   *  Mapping: 40 logical pieces → 14 visual fragments.
+   *  Each visual fragment corresponds to ~2.9 logical pieces (~7.1% progress).
+   *  Thresholds are evenly spaced: 1/14, 2/14, ... 14/14. */
+  unlockAt: number;
+  /** Width hint (viewBox units). Not used for rendering, but useful for
+   *  coordinate reference. */
+  width: number;
+  /** Height hint (viewBox units). */
+  height: number;
+};
  
  export type WishPhoneAssets = {
    baseSrc: string;

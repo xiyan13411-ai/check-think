@@ -195,6 +195,29 @@ export default function Home() {
     state.goal.totalPieces,
   );
 
+  const heroScene =
+    HERO_MODE === "asset" ? (
+      <AssetHeroScene
+        totalPieces={state.goal.totalPieces}
+        unlockedPieces={unlockedPieces}
+        currentAmount={state.goal.currentAmount}
+        targetAmount={state.goal.targetAmount}
+        newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
+        warmUpNextPiece={warmUpNextPiece}
+        saveAnimation={saveAnimation}
+      />
+    ) : (
+      <WishHeroScene
+        totalPieces={state.goal.totalPieces}
+        unlockedPieces={unlockedPieces}
+        currentAmount={state.goal.currentAmount}
+        targetAmount={state.goal.targetAmount}
+        newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
+        warmUpNextPiece={warmUpNextPiece}
+        saveAnimation={saveAnimation}
+      />
+    );
+
   return (
     <main className="safe-area-bottom min-h-screen bg-orange-50 px-4 py-6 text-stone-900">
       <div className="mx-auto flex w-full max-w-md flex-col gap-4">
@@ -235,38 +258,7 @@ export default function Home() {
           flashAmount={flashAmount}
         />
 
-        {HERO_MODE === "asset" ? (
-          <AssetHeroScene
-            totalPieces={state.goal.totalPieces}
-            unlockedPieces={unlockedPieces}
-            currentAmount={state.goal.currentAmount}
-            targetAmount={state.goal.targetAmount}
-            newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
-            warmUpNextPiece={warmUpNextPiece}
-            saveAnimation={saveAnimation}
-          />
-        ) : (
-          <WishHeroScene
-            totalPieces={state.goal.totalPieces}
-            unlockedPieces={unlockedPieces}
-            currentAmount={state.goal.currentAmount}
-            targetAmount={state.goal.targetAmount}
-            newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
-            warmUpNextPiece={warmUpNextPiece}
-            saveAnimation={saveAnimation}
-          />
-        )}
-        ) : (
-          <WishHeroScene
-          totalPieces={state.goal.totalPieces}
-          unlockedPieces={unlockedPieces}
-          currentAmount={state.goal.currentAmount}
-          targetAmount={state.goal.targetAmount}
-          newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
-          warmUpNextPiece={warmUpNextPiece}
-          saveAnimation={saveAnimation}
-        />
-
+        {heroScene}
         {/* Save panel */}
         <SavePanel onSave={handleSave} />
 
