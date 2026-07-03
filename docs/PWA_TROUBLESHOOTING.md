@@ -142,3 +142,39 @@ curl -I https://your-app.vercel.app/icons/icon-512.png
 - [Web App Manifest](https://developer.mozilla.org/zh-CN/docs/Web/Manifest)
 - [Vercel PWA 部署](https://vercel.com/docs/frameworks/nextjs)
 - [Maskable Icons](https://web.dev/articles/maskable-icon)
+ 
+ ---
+ 
+ ## 6. 桌面入口没有同步最新版本怎么办
+ 
+ ### 现象
+ 
+ 浏览器打开是新版，但手机桌面快捷方式打开还是旧版。
+ 
+ ### 原因
+ 
+ - 浏览器缓存 - 旧 HTML/CSS/JS 仍被浏览器或 service worker 缓存
+ - 桌面快捷方式仍使用旧 WebView/旧资源
+ - 旧 Tab 未关闭，打开的仍是旧版
+ - PWA 的 service worker 等待激活
+ 
+ ### 解决步骤
+ 
+ 1. 关闭所有该 App 的页面/Tab。
+ 2. 用手机浏览器（Chrome/Edge）打开最新 Vercel 链接，下拉刷新确认是新版。
+ 3. 点击页面底部的 **"检查更新"** 按钮确认版本。
+ 4. 如果发现新版本，点击"立即刷新"。
+ 5. 如仍未更新，删除桌面快捷方式，在浏览器中重新"添加到主屏幕"。
+ 6. 必要时清理浏览器站点缓存：
+    - Chrome：地址栏 → 左侧锁图标 → 站点设置 → 清除数据
+    - Edge：菜单 → 设置 → 隐私和安全 → 清除浏览数据 → 缓存的图片和文件
+ 
+ > **注意**：清理站点缓存会同时清除 localStorage（存钱记录），测试阶段可以接受，正式使用前请先导出数据。
+ 
+ ### 预防
+ 
+ 每次大版本更新后：
+ 
+ 1. 同步更新 `lib/app-version.ts` 和 `public/version.json` 中的版本号。
+ 2. 推送代码到 GitHub，等待 Vercel 重新部署。
+ 3. 在版本说明中告知用户需要"检查更新 → 刷新"。

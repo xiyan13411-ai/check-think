@@ -1,27 +1,34 @@
-"use client";
+ "use client";
 
-import { useMemo } from "react";
-import { formatCurrency } from "@/lib/progress";
+ import { useMemo } from "react";
+ import { formatCurrency } from "@/lib/progress";
+ import FlyingShards from "./FlyingShards";
 
-type WishPhoneRevealProps = {
-  totalPieces: number;
-  unlockedPieces: number;
-  currentAmount: number;
-  targetAmount: number;
-  newlyUnlockedPieceIndexes?: number[];
-  warmUpNextPiece?: boolean;
-};
+ type WishPhoneRevealProps = {
+   totalPieces: number;
+   unlockedPieces: number;
+   currentAmount: number;
+   targetAmount: number;
+   newlyUnlockedPieceIndexes?: number[];
+   warmUpNextPiece?: boolean;
+   saveAnimation?: {
+     key: number;
+     mode: "warmup" | "unlock" | "complete";
+     count: number;
+   } | null;
+ };
 
-const COLS = 5;
+ const COLS = 5;
 
-export default function WishPhoneReveal({
-  totalPieces = 40,
-  unlockedPieces,
-  currentAmount,
-  targetAmount,
-  newlyUnlockedPieceIndexes = [],
-  warmUpNextPiece = false,
-}: WishPhoneRevealProps) {
+ export default function WishPhoneReveal({
+   totalPieces = 40,
+   unlockedPieces,
+   currentAmount,
+   targetAmount,
+   newlyUnlockedPieceIndexes = [],
+   warmUpNextPiece = false,
+   saveAnimation = null,
+ }: WishPhoneRevealProps) {
   const pieces = useMemo(
     () => Array.from({ length: totalPieces }, (_, i) => i),
     [totalPieces],
@@ -64,7 +71,16 @@ export default function WishPhoneReveal({
             }}
           >
             {/* Screen area */}
-            <div className="relative h-80 w-full overflow-hidden rounded-[1.75rem] bg-rose-50">
+           <div className="relative h-80 w-full overflow-hidden rounded-[1.75rem] bg-rose-50">
+               {/* Flying shards overlay */}
+               {saveAnimation && (
+                 <FlyingShards
+                   triggerKey={saveAnimation.key}
+                   mode={saveAnimation.mode}
+                   count={saveAnimation.count}
+                 />
+               )}
+ 
               {/* Wallpaper gradient (always visible underneath) */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br transition-opacity duration-700 ${
@@ -126,15 +142,22 @@ export default function WishPhoneReveal({
           {isComplete && (
             <>
               <div className="pointer-events-none absolute -inset-4 z-0 rounded-[2.5rem] phone-soft-glow" />
-              <span className="absolute -left-3 -top-2 text-lg" style={{ animation: "float-star 2s ease-in-out infinite" }}>
-                ✨
-              </span>
-              <span className="absolute -bottom-1 -right-3 text-base" style={{ animation: "float-star 2s ease-in-out 0.6s infinite" }}>
-                ✨
-              </span>
-              <span className="absolute -right-3 top-8 text-sm" style={{ animation: "float-star 2.5s ease-in-out 1.2s infinite" }}>
-                🌟
-              </span>
+               {/* Completion badge */}
+               <div className="absolute -right-2 -top-2 z-10 flex h-9 min-w-[4rem] items-center justify-center rounded-full bg-gradient-to-r from-pink-400 to-orange-400 px-3 text-xs font-bold text-white shadow-md">
+                 已完成
+               </div>
+               <span className="absolute -left-3 -top-2 text-lg" style={{ animation: "float-star 2s ease-in-out infinite" }}>
+                 ✨
+               </span>
+               <span className="absolute -bottom-1 -right-3 text-base" style={{ animation: "float-star 2s ease-in-out 0.6s infinite" }}>
+                 ✨
+               </span>
+               <span className="absolute -right-3 top-8 text-sm" style={{ animation: "float-star 2.5s ease-in-out 1.2s infinite" }}>
+                 🌟
+               </span>
+               <span className="absolute -bottom-2 left-6 text-xs" style={{ animation: "float-star 3s ease-in-out 0.8s infinite" }}>
+                 ✨
+               </span>
             </>
           )}
         </div>
@@ -162,16 +185,21 @@ export default function WishPhoneReveal({
         )}
 
         {/* 100% celebration message */}
-        {isComplete && (
-          <div className="mt-5 text-center">
-            <p className="text-sm font-semibold text-pink-500">
-              🎉 愿望全部拼回来了！
-            </p>
-            <p className="mt-1 text-xs text-stone-400">
-              你的新手机基金已经攒够啦
-            </p>
-          </div>
-        )}
+         {isComplete && (
+           <div className="mt-6 text-center">
+             <p className="text-sm font-semibold text-pink-500">
+               🎉 愿望全部拼回来了！
+             </p>
+             <p className="mt-1 text-xs text-stone-400">
+               你的新手机基金已经攒够啦
+             </p>
+             <div className="mx-auto mt-3 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-pink-50 to-orange-50 px-4 py-1.5 text-xs text-stone-500 shadow-sm">
+               <span className="text-pink-400">★</span>
+               共积攒 ¥{targetAmount.toLocaleString("zh-CN")}
+               <span className="text-orange-400">★</span>
+             </div>
+           </div>
+         )}
 
         {/* Warm-up coin source indicator */}
         {warmUpNextPiece && !isComplete && (

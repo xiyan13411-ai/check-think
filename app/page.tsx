@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import GoalCard from "@/components/GoalCard";
-import WishPhoneReveal from "@/components/WishPhoneReveal";
+ import WishHeroScene from "@/components/WishHeroScene";
 import SavePanel from "@/components/SavePanel";
 import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
+ import AppUpdateNotice from "@/components/AppUpdateNotice";
 
 import { loadAppState, saveAppState, resetAppState } from "@/lib/storage";
 import { calculateProgress, calculateUnlockedPieces } from "@/lib/progress";
@@ -29,8 +30,15 @@ export default function Home() {
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [newlyUnlockedPieceIndexes, setNewlyUnlockedPieceIndexes] = useState<number[]>([]);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
-  const [warmUpNextPiece, setWarmUpNextPiece] = useState(false);
-  const initialized = useRef(false);
+ const [warmUpNextPiece, setWarmUpNextPiece] = useState(false);
+   type SaveAnimationMode = "warmup" | "unlock" | "complete";
+   const [saveAnimation, setSaveAnimation] = useState<{
+     key: number;
+     mode: SaveAnimationMode;
+     count: number;
+   } | null>(null);
+   const animKeyRef = useRef(0);
+   const initialized = useRef(false);
 
   // Load state on mount
   useEffect(() => {
@@ -41,12 +49,15 @@ export default function Home() {
     setNewlyUnlockedPieceIndexes([]);
   }, []);
 
-  const handleSave = useCallback(
-    (amount: number) => {
-      if (!state) return;
-      if (amount <= 0 || isNaN(amount)) return;
+ const handleSave = useCallback(
+   (amount: number) => {
+     if (!state) return;
+     if (amount <= 0 || isNaN(amount)) return;
 
-      vibrate();
+     vibrate();
+ 
+      // Generate animation key before computing state changes
+      const animKey = ++animKeyRef.current;
 
       // Old unlocked count (before this save)
       const oldProgress = calculateProgress(
@@ -73,7 +84,22 @@ export default function Home() {
       );
 
       // Differentiated message
-      const message = getRandomMessage(newlyUnlocked.length > 0);
+     const message = getRandomMessage(newlyUnlocked.length > 0);
+ 
+      // Determine save animation mode
+      let animMode: SaveAnimationMode;
+      let animCount: number;
+      if (newProgress >= 1) {
+        animMode = "complete";
+        animCount = 10;
+      } else if (newlyUnlocked.length > 0) {
+        animMode = "unlock";
+        animCount = Math.min(4 + newlyUnlocked.length, 8);
+      } else {
+        animMode = "warmup";
+        animCount = 2;
+      }
+      setSaveAnimation({ key: animKey, mode: animMode, count: animCount });
 
       const record: SavingRecord = {
         id: generateId(),
@@ -124,10 +150,11 @@ export default function Home() {
       }
 
       // Flash and message
-      setFlashAmount(true);
-      setSaveMessage(message);
-      setTimeout(() => setFlashAmount(false), 500);
-      setTimeout(() => setSaveMessage(null), 2500);
+     setFlashAmount(true);
+     setSaveMessage(message);
+      setTimeout(() => setSaveAnimation(null), 2000);
+     setTimeout(() => setFlashAmount(false), 500);
+     setTimeout(() => setSaveMessage(null), 2500);
     },
     [state],
   );
@@ -204,13 +231,14 @@ export default function Home() {
         />
 
         {/* Wish Object View */}
-        <WishPhoneReveal
+        <WishHeroScene
           totalPieces={state.goal.totalPieces}
           unlockedPieces={unlockedPieces}
           currentAmount={state.goal.currentAmount}
           targetAmount={state.goal.targetAmount}
           newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
           warmUpNextPiece={warmUpNextPiece}
+          saveAnimation={saveAnimation}
         />
 
         {/* Save panel */}
@@ -256,6 +284,8 @@ export default function Home() {
           achievement={currentAchievement}
           onClose={closeAchievement}
         />
+ 
+        <AppUpdateNotice />
       </div>
     </main>
   );
