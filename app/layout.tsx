@@ -4,6 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "愿望拼图存钱",
   description: "每存一笔钱，愿望就拼回来一块",
+  applicationName: "愿望拼图存钱",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
@@ -28,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
+      <head>
+        <meta name="application-name" content="愿望拼图存钱" />
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );

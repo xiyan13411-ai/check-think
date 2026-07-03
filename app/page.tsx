@@ -28,8 +28,8 @@ export default function Home() {
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [newlyUnlockedPieceIndexes, setNewlyUnlockedPieceIndexes] = useState<number[]>([]);
-
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [warmUpNextPiece, setWarmUpNextPiece] = useState(false);
   const initialized = useRef(false);
 
   // Load state on mount
@@ -38,7 +38,6 @@ export default function Home() {
     initialized.current = true;
     const loaded = loadAppState();
     setState(loaded);
-    // Initialize with empty — no animation on page load
     setNewlyUnlockedPieceIndexes([]);
   }, []);
 
@@ -73,7 +72,8 @@ export default function Home() {
         (_, idx) => oldUnlocked + idx,
       );
 
-      const message = getRandomMessage();
+      // Differentiated message
+      const message = getRandomMessage(newlyUnlocked.length > 0);
 
       const record: SavingRecord = {
         id: generateId(),
@@ -113,9 +113,14 @@ export default function Home() {
       // Set newly unlocked for animation
       if (newlyUnlocked.length > 0) {
         setNewlyUnlockedPieceIndexes(newlyUnlocked);
-
-        // Clear after animation completes
         setTimeout(() => setNewlyUnlockedPieceIndexes([]), 1200);
+        setWarmUpNextPiece(false);
+      } else {
+        // No piece unlocked — warm up the next one
+        if (oldUnlocked < state.goal.totalPieces) {
+          setWarmUpNextPiece(true);
+          setTimeout(() => setWarmUpNextPiece(false), 1500);
+        }
       }
 
       // Flash and message
@@ -202,8 +207,10 @@ export default function Home() {
         <PuzzleView
           totalPieces={state.goal.totalPieces}
           unlockedPieces={unlockedPieces}
+          currentAmount={state.goal.currentAmount}
+          targetAmount={state.goal.targetAmount}
           newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
-
+          warmUpNextPiece={warmUpNextPiece}
         />
 
         {/* Save panel */}

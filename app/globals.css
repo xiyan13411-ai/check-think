@@ -52,3 +52,39 @@ body {
 .puzzle-pop-in {
   animation: puzzle-pop-in 0.55s ease-out forwards;
 }
+
+/* Puzzle piece warm-up glow animation (no new piece unlocked) */
+@keyframes piece-warm-up {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(249, 168, 212, 0);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(249, 168, 212, 0.5), 0 0 20px rgba(251, 191, 36, 0.2);
+    transform: scale(1.08);
+  }
+}
+
+.piece-warm-up {
+  animation: piece-warm-up 1.2s ease-in-out infinite;
+}
+
+/* Next piece progress bar */
+.next-piece-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: #f1f5f9;
+}
+
+.next-piece-progress::-webkit-progress-bar {
+  border-radius: 2px;
+  background: #f1f5f9;
+}
+
+.next-piece-progress::-webkit-progress-value {
+  border-radius: 2px;
+  background: linear-gradient(to right, #f9a8d4, #fb923c);
+  transition: width 0.4s ease;
+}
