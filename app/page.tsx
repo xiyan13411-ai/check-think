@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import GoalCard from "@/components/GoalCard";
-import PuzzleView from "@/components/PuzzleView";
+import WishObjectView from "@/components/WishObjectView";
 import SavePanel from "@/components/SavePanel";
 import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
@@ -203,8 +203,8 @@ export default function Home() {
           flashAmount={flashAmount}
         />
 
-        {/* Puzzle view */}
-        <PuzzleView
+        {/* Wish Object View */}
+        <WishObjectView
           totalPieces={state.goal.totalPieces}
           unlockedPieces={unlockedPieces}
           currentAmount={state.goal.currentAmount}
