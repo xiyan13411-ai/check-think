@@ -12,6 +12,15 @@
 
 > 🎯 V4 小红书Hero Scene 主视觉重构（当前阶段）
 
+> 🎯 V8 参考图风格破碎重组（当前阶段）
+
+✅ phone-render.svg 重做 — 银白机身+深蓝反光+清晰镜头模组+金属边框
+✅ fragmented-phone-map.ts — 20 块高扰动不规则碎片（±9% 扰动，打破网格感）
+✅ FragmentedPhoneScene — ghost silhouette + drop-shadow + 玻璃高光边缘层
+✅ shard 边缘高光：linear-gradient + overlay blend 模拟玻璃碎片厚度
+✅ 100% 完成态改善
+✅ 仍然是 2.5D SVG/CSS，无 Three.js
+
 > 🎯 V7 破碎重组式主视觉（当前阶段）
 
 ✅ lib/fragmented-phone-map.ts — 20 个不规则 clip-path shards 配置

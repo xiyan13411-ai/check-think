@@ -1,33 +1,56 @@
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 420" fill="none">
-   <!-- Drop shadow -->
-   <rect x="15" y="15" width="170" height="390" rx="35" fill="rgba(0,0,0,0.03)" stroke="rgba(0,0,0,0.04)" stroke-width="2" transform="translate(0,4)" />
-   <!-- Phone body -->
-   <defs>
-     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-       <stop offset="0%" stop-color="#fef3f2" />
-       <stop offset="40%" stop-color="#fce7f3" />
-       <stop offset="100%" stop-color="#ffedd5" />
-     </linearGradient>
-     <radialGradient id="lens" cx="50%" cy="50%" r="50%">
-       <stop offset="0%" stop-color="#292524" />
-       <stop offset="80%" stop-color="#1c1917" />
-       <stop offset="100%" stop-color="#44403c" />
-     </radialGradient>
-   </defs>
-   <rect x="15" y="15" width="170" height="390" rx="35" fill="url(#bg)" stroke="#e7e5e4" stroke-width="1.5" />
-   <!-- Camera module -->
-   <rect x="30" y="40" width="65" height="80" rx="12" fill="#f5f5f4" stroke="#d6d3d1" stroke-width="0.8" />
-   <circle cx="45" cy="55" r="12" fill="url(#lens)" />
-   <circle cx="45" cy="55" r="10" fill="#292524" />
-   <circle cx="42" cy="52" r="3" fill="rgba(255,255,255,0.08)" />
-   <circle cx="75" cy="55" r="9" fill="url(#lens)" />
-   <circle cx="75" cy="55" r="7" fill="#292524" />
-   <circle cx="73" cy="53" r="2" fill="rgba(255,255,255,0.08)" />
-   <circle cx="60" cy="70" r="6" fill="url(#lens)" />
-   <circle cx="60" cy="70" r="4.5" fill="#292524" />
-   <rect x="30" y="105" width="8" height="8" rx="2" fill="#e7e5e4" />
-   <!-- Edge highlight -->
-   <path d="M20,18 Q100,15 180,18" stroke="rgba(255,255,255,0.35)" stroke-width="1" fill="none" />
-   <!-- Metal frame border -->
-   <rect x="15" y="15" width="170" height="390" rx="35" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" />
- </svg>
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 420" fill="none">
+  <defs>
+    <filter id="shadowBlur" x="-10%" y="-10%" width="130%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+      <feOffset dx="0" dy="6" />
+      <feComponentTransfer><feFuncA type="linear" slope="0.15" /></feComponentTransfer>
+      <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="35%" stop-color="#f1f5f9" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="reflect" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a" stop-opacity="0.35" />
+      <stop offset="20%" stop-color="#0f172a" stop-opacity="0.10" />
+      <stop offset="60%" stop-color="#0f172a" stop-opacity="0" />
+      <stop offset="85%" stop-color="#0f172a" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.28" />
+    </linearGradient>
+    <radialGradient id="lensGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="70%" stop-color="#292524" />
+      <stop offset="100%" stop-color="#44403c" />
+    </radialGradient>
+    <linearGradient id="edgeGlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(255,255,255,0)" />
+      <stop offset="50%" stop-color="rgba(255,255,255,0.5)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+    </linearGradient>
+  </defs>
+  <rect x="15" y="18" width="170" height="390" rx="35" fill="rgba(15,23,42,0.08)" />
+  <rect x="13" y="13" width="174" height="394" rx="37" fill="#1e293b" />
+  <rect x="15" y="15" width="170" height="390" rx="35" fill="url(#bodyGrad)" stroke="#cbd5e1" stroke-width="0.8" />
+  <rect x="15" y="15" width="170" height="390" rx="35" fill="url(#reflect)" />
+  <rect x="15" y="15" width="170" height="390" rx="35" fill="url(#edgeGlow)" opacity="0.3" />
+  <rect x="30" y="38" width="65" height="85" rx="14" fill="#0f172a" stroke="#334155" stroke-width="0.8" />
+  <rect x="32" y="40" width="61" height="81" rx="12" fill="#1e293b" />
+  <circle cx="45" cy="55" r="12" fill="url(#lensGrad)" />
+  <circle cx="45" cy="55" r="9" fill="#0f172a" />
+  <circle cx="42" cy="52" r="2.5" fill="rgba(255,255,255,0.12)" />
+  <circle cx="75" cy="55" r="9" fill="url(#lensGrad)" />
+  <circle cx="75" cy="55" r="6.5" fill="#0f172a" />
+  <circle cx="73" cy="53" r="1.8" fill="rgba(255,255,255,0.12)" />
+  <circle cx="60" cy="72" r="6" fill="url(#lensGrad)" />
+  <circle cx="60" cy="72" r="4" fill="#0f172a" />
+  <circle cx="59" cy="71" r="1.2" fill="rgba(255,255,255,0.1)" />
+  <rect x="82" y="102" width="5" height="5" rx="1.5" fill="#94a3b8" />
+  <rect x="35" y="105" width="6" height="6" rx="2" fill="#334155" />
+  <rect x="15" y="15" width="170" height="390" rx="35" fill="none" stroke="#94a3b8" stroke-width="1" />
+  <rect x="16.5" y="16.5" width="167" height="387" rx="33.5" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="0.5" />
+  <path d="M25,17 Q100,14 175,17" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none" />
+  <path d="M17,25 Q16,210 17,395" stroke="rgba(255,255,255,0.15)" stroke-width="0.8" fill="none" />
+  <path d="M30,30 Q100,20 170,30" stroke="rgba(255,255,255,0.06)" stroke-width="18" fill="none" />
+  <path d="M25,380 Q100,395 175,380" stroke="rgba(15,23,42,0.05)" stroke-width="14" fill="none" />
+</svg>
