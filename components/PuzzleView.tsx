@@ -1,16 +1,18 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 type PuzzleViewProps = {
   totalPieces: number;
   unlockedPieces: number;
+  newlyUnlockedPieceIndexes?: number[];
 };
 
 export default function PuzzleView({
   totalPieces = 40,
   unlockedPieces,
+  newlyUnlockedPieceIndexes = [],
 }: PuzzleViewProps) {
   const pieces = useMemo(
     () => Array.from({ length: totalPieces }, (_, i) => i),
@@ -34,48 +36,28 @@ export default function PuzzleView({
 
       {/* Puzzle grid */}
       <div className="grid grid-cols-8 gap-1.5">
-        <AnimatePresence>
-          {pieces.map((i) => {
-            const unlocked = i < unlockedPieces;
-            const isNewlyUnlocked = i === unlockedPieces - 1 && unlockedPieces > 0;
+        {pieces.map((i) => {
+          const unlocked = i < unlockedPieces;
+          const justUnlocked = newlyUnlockedPieceIndexes.includes(i);
+          const staggerDelay = i * 0.025;
 
-            return (
-              <motion.div
-                key={i}
-                className={`aspect-square rounded-md ${
-                  unlocked
-                    ? "bg-gradient-to-br from-pink-300 to-orange-300"
-                    : "bg-stone-100"
-                }`}
-                initial={
-                  isNewlyUnlocked
-                    ? { scale: 0, opacity: 0, rotate: -180 }
-                    : unlocked
-                      ? { scale: 1, opacity: 1 }
-                      : {}
-                }
-                animate={
-                  isNewlyUnlocked
-                    ? { scale: 1, opacity: 1, rotate: 0 }
-                    : unlocked
-                      ? { scale: 1, opacity: 1 }
-                      : { scale: 1, opacity: 1 }
-                }
-                transition={
-                  isNewlyUnlocked
-                    ? {
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 12,
-                        delay: i * 0.01,
-                      }
-                    : { duration: 0.3 }
-                }
-                whileHover={unlocked ? { scale: 1.15 } : {}}
-              />
-            );
-          })}
-        </AnimatePresence>
+          return (
+            <motion.div
+              key={i}
+              className={`aspect-square rounded-md ${
+                unlocked
+                  ? "bg-gradient-to-br from-pink-300 to-orange-300"
+                  : "bg-stone-100"
+              } ${justUnlocked ? "puzzle-pop-in" : ""}`}
+              style={
+                justUnlocked
+                  ? { animationDelay: `${staggerDelay}s` }
+                  : undefined
+              }
+              whileHover={unlocked ? { scale: 1.15 } : {}}
+            />
+          );
+        })}
       </div>
 
       {/* Mini preview piece for recent unlocks */}

@@ -9,7 +9,7 @@ import SavePanel from "@/components/SavePanel";
 import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
 
-import { loadAppState, saveAppState } from "@/lib/storage";
+import { loadAppState, saveAppState, resetAppState } from "@/lib/storage";
 import { calculateProgress, calculateUnlockedPieces } from "@/lib/progress";
 import { getRandomMessage } from "@/lib/copywriting";
 import { checkNewAchievements } from "@/lib/achievements";
@@ -27,7 +27,9 @@ export default function Home() {
   const [flashAmount, setFlashAmount] = useState(false);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
-  const [prevUnlocked, setPrevUnlocked] = useState(0);
+  const [newlyUnlockedPieceIndexes, setNewlyUnlockedPieceIndexes] = useState<number[]>([]);
+
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const initialized = useRef(false);
 
   // Load state on mount
@@ -36,12 +38,8 @@ export default function Home() {
     initialized.current = true;
     const loaded = loadAppState();
     setState(loaded);
-    setPrevUnlocked(
-      calculateUnlockedPieces(
-        calculateProgress(loaded.goal.currentAmount, loaded.goal.targetAmount),
-        loaded.goal.totalPieces,
-      ),
-    );
+    // Initialize with empty — no animation on page load
+    setNewlyUnlockedPieceIndexes([]);
   }, []);
 
   const handleSave = useCallback(
@@ -51,12 +49,30 @@ export default function Home() {
 
       vibrate();
 
-      const newAmount = state.goal.currentAmount + amount;
-      const progress = calculateProgress(newAmount, state.goal.targetAmount);
-      const unlockedPieces = calculateUnlockedPieces(
-        progress,
+      // Old unlocked count (before this save)
+      const oldProgress = calculateProgress(
+        state.goal.currentAmount,
+        state.goal.targetAmount,
+      );
+      const oldUnlocked = calculateUnlockedPieces(
+        oldProgress,
         state.goal.totalPieces,
       );
+
+      // New values after save
+      const newAmount = state.goal.currentAmount + amount;
+      const newProgress = calculateProgress(newAmount, state.goal.targetAmount);
+      const newUnlocked = calculateUnlockedPieces(
+        newProgress,
+        state.goal.totalPieces,
+      );
+
+      // Compute newly unlocked piece indexes
+      const newlyUnlocked = Array.from(
+        { length: Math.max(newUnlocked - oldUnlocked, 0) },
+        (_, idx) => oldUnlocked + idx,
+      );
+
       const message = getRandomMessage();
 
       const record: SavingRecord = {
@@ -64,8 +80,8 @@ export default function Home() {
         goalId: state.goal.id,
         amount,
         createdAt: new Date().toISOString(),
-        progressAfter: progress,
-        unlockedPieces,
+        progressAfter: newProgress,
+        unlockedPieces: newUnlocked,
         message,
       };
 
@@ -80,7 +96,7 @@ export default function Home() {
 
       // Check achievements
       const newAchievement = checkNewAchievements(
-        progress,
+        newProgress,
         newState.unlockedAchievements,
       );
       if (newAchievement) {
@@ -94,6 +110,14 @@ export default function Home() {
       setState(newState);
       saveAppState(newState);
 
+      // Set newly unlocked for animation
+      if (newlyUnlocked.length > 0) {
+        setNewlyUnlockedPieceIndexes(newlyUnlocked);
+
+        // Clear after animation completes
+        setTimeout(() => setNewlyUnlockedPieceIndexes([]), 1200);
+      }
+
       // Flash and message
       setFlashAmount(true);
       setSaveMessage(message);
@@ -102,6 +126,15 @@ export default function Home() {
     },
     [state],
   );
+
+  const handleReset = useCallback(() => {
+    const defaultState = resetAppState();
+    setState(defaultState);
+    setNewlyUnlockedPieceIndexes([]);
+    setCurrentAchievement(null);
+    setSaveMessage(null);
+    setShowResetConfirm(false);
+  }, []);
 
   const closeAchievement = useCallback(() => {
     setCurrentAchievement(null);
@@ -169,6 +202,8 @@ export default function Home() {
         <PuzzleView
           totalPieces={state.goal.totalPieces}
           unlockedPieces={unlockedPieces}
+          newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
+
         />
 
         {/* Save panel */}
@@ -176,6 +211,38 @@ export default function Home() {
 
         {/* History receipts */}
         <HistoryReceipt records={state.records} />
+
+        {/* Reset button */}
+        <div className="mt-2 text-center">
+          {showResetConfirm ? (
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-xs text-stone-400">
+                确认重置所有数据？当前存钱记录将全部清空。
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleReset}
+                  className="text-xs text-red-400 underline underline-offset-2"
+                >
+                  确认重置
+                </button>
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  className="text-xs text-stone-400 underline underline-offset-2"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => setShowResetConfirm(true)}
+              className="text-xs text-stone-300 hover:text-stone-400 transition-colors"
+            >
+              重置测试数据
+            </button>
+          )}
+        </div>
 
         {/* Achievement modal */}
         <AchievementModal
