@@ -8,7 +8,7 @@
 
 ## 当前状态
 
-MVP 已完成，进入 **Post-MVP 打磨阶段**。
+MVP 已完成，进入 **部署预览与安卓真机验收阶段**。
 
 ---
 
@@ -30,6 +30,20 @@ npm run dev
 ```
 
 然后浏览器打开 `http://localhost:3000`
+
+---
+
+## 部署预览
+
+部署到 Vercel 后可通过手机浏览器直接访问：
+
+详细部署步骤见：[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
+
+```bash
+# 部署前确认
+npm install
+npm run build     # 必须通过
+```
 
 ---
 
@@ -55,58 +69,14 @@ npm run dev
 
 ---
 
-## Post-MVP 打磨
+## 安卓真机验收
 
-本次打磨完成：
+在 Android Chrome 中打开 Vercel 预览链接，逐项检查：
 
-1. **修复碎片动画逻辑**
-   - 正确计算本次新增解锁的碎片 indexes
-   - 多块新增碎片依次渐入动画（stagger）
-   - 刷新页面不会误触发已有碎片动画
-   - 每次存钱仅新增碎片播放动画
+- 验收清单：[docs/ANDROID_TEST_CHECKLIST.md](docs/ANDROID_TEST_CHECKLIST.md)
+- 测试报告模板：[docs/ANDROID_TEST_REPORT_TEMPLATE.md](docs/ANDROID_TEST_REPORT_TEMPLATE.md)
 
-2. **增加重置测试数据按钮**
-   - 页面底部灰色低调按钮
-   - 点击后二次确认
-   - 确认后清空所有本地数据，恢复默认状态
-
-3. **新增安卓真机测试文档**
-   - `docs/ANDROID_TEST_CHECKLIST.md`
-
-4. **更新本 README**
-
----
-
-## 安卓真机测试
-
-在 Android Chrome 中打开页面（本地或 Vercel 预览地址），按以下步骤检查：
-
-```bash
-# 1. 打开页面
-# 2. 检查首屏布局
-# 3. 依次点击 ¥10 / ¥50 / ¥100 / ¥500
-# 4. 输入自定义金额并保存
-# 5. 观察新增碎片动画
-# 6. 刷新页面确认数据不丢
-# 7. 在底部点击"重置测试数据" → 二次确认 → 重置
-# 8. 按照 docs/ANDROID_TEST_CHECKLIST.md 逐项验收
-```
-
-详细测试清单见：[docs/ANDROID_TEST_CHECKLIST.md](docs/ANDROID_TEST_CHECKLIST.md)
-
----
-
-## Vercel 部署准备
-
-当前项目已准备好部署到 Vercel：
-
-1. 登录 [Vercel](https://vercel.com)
-2. 导入 GitHub 仓库 `xiyan13411-ai/check-think`
-3. 框架选择 **Next.js**
-4. 部署命令和输出目录使用默认值
-5. 部署后即可通过手机访问预览链接
-
-后续开发建议先部署到 Vercel，方便手机端实时测试。
+验收完成后，请填写一份测试报告，用于决定下一阶段方向。
 
 ---
 
@@ -125,15 +95,15 @@ npm run dev
 
 以下功能按优先级排列：
 
-| 优先级 | 任务 | 说明 |
-|--------|------|------|
-| P0 | 部署 Vercel 预览地址 | 方便手机端验收 |
-| P0 | 安卓真机完整验收 | 按清单逐项检查 |
-| P1 | 分享海报 | 适合小红书传播 |
-| P2 | 多目标管理 | 长期使用需要 |
-| P2 | 自定义目标图片 | 拼图的产品灵魂 |
-| P3 | Capacitor 打包 APK | Web 体验稳定后再做 |
-| P3 | 云同步 / 登录 | 暂时不急 |
+| 优先级 | 任务 | 状态 | 说明 |
+|--------|------|------|------|
+| P0 | Vercel 预览部署 | ✅ 待部署 | docs 就绪，需要导入 Vercel |
+| P0 | 安卓真机完整验收 | ✅ 待测试 | 按清单逐项检查，填写报告 |
+| P1 | 体验问题修复 | ⏸ 待真机反馈 | 根据测试结果决定 |
+| P1 | 分享海报 | ⏸ 暂缓 | 爽感确认后再做 |
+| P2 | 多目标管理 | ⏸ 暂缓 | 长期使用需要 |
+| P2 | 自定义目标图片 | ⏸ 暂缓 | 拼图的核心增强 |
+| P3 | Capacitor 打包 APK | ⏸ 暂缓 | 等 Web 体验稳定 |
 
 ---
 
