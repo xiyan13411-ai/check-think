@@ -65,9 +65,3 @@ const productRegistry: Partial<Record<WishType, ProductAsset>> = {
 export function getWishAsset(type: WishType): ProductAsset {
   return productRegistry[type] ?? productRegistry.phone!;
 }
-
-/**
- * Experimental: phone fragment-based system (used for future upgrade)
- * Keeps current advanced decomposition system isolated
- */
-export * from "./wish-phone-fragments";
