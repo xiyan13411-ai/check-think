@@ -3,8 +3,8 @@
  import { useMemo, useCallback } from "react";
  import { motion } from "framer-motion";
  import { formatCurrency } from "@/lib/progress";
- import { phoneWishAssets, getUnlockedFragmentIndices } from "@/lib/wish-assets";
- import type { WishFragmentAsset } from "@/lib/wish-assets";
+import { phoneShards, getUnlockedShardIndices } from "@/lib/fragmented-phone-map";
+ 
  
  type AssetHeroSceneProps = {
    totalPieces: number;
@@ -46,10 +46,10 @@
    const progress = Math.min(currentAmount / targetAmount, 1);
    const isComplete = unlockedPieces >= totalPieces;
  
-   const { fragments } = phoneWishAssets;
+    const fragments = phoneShards;
    const unlockedIndices = useMemo(
-     () => getUnlockedFragmentIndices(progress, fragments),
-     [progress, fragments],
+     () => getUnlockedShardIndices(progress),
+      [progress],
    );
  
    // Next piece calculation
@@ -160,22 +160,22 @@
                      key={i}
                      initial={
                        unlocked
-                         ? { opacity: 1, translateX: f.startX, translateY: f.startY, rotate: f.targetRotate * 2 }
-                         : { opacity: 0.5, translateX: floatX, translateY: floatY, rotate: f.targetRotate }
+                         ? { opacity: 1, translateX: f.startX, translateY: f.startY, rotate: f.startRotate * 2 }
+                         : { opacity: 0.5, translateX: floatX, translateY: floatY, rotate: f.startRotate }
                      }
                      animate={
                        unlocked
                          ? {
                              opacity: 1,
-                             translateX: f.targetX,
-                             translateY: f.targetY,
-                             rotate: f.targetRotate,
+                             translateX: 0,
+                             translateY: 0,
+                             rotate: f.startRotate,
                            }
                          : {
                              opacity: 0.45,
                              translateX: floatX,
                              translateY: floatY,
-                             rotate: f.targetRotate,
+                             rotate: f.startRotate,
                            }
                      }
                      transition={
@@ -185,7 +185,7 @@
                      }
                    >
                      <polygon
-                       points={f.fallbackPoints}
+                       points={cssToSvgPoints(f.clipPath)}
                        fill={unlocked ? "url(#abg)" : "rgba(255,255,255,0.5)"}
                        stroke={unlocked ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.25)"}
                        strokeWidth="0.5"
@@ -243,3 +243,5 @@
      </div>
    );
  }
+
+

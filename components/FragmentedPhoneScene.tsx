@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { formatCurrency } from "@/lib/progress";
 import { phoneShards, getUnlockedShardIndices } from "@/lib/fragmented-phone-map";
-import { phoneRenderAsset } from "@/lib/wish-assets";
+
 
 type FragmentedPhoneSceneProps = {
   totalPieces: number;
@@ -20,8 +20,8 @@ type FragmentedPhoneSceneProps = {
   } | null;
 };
 
-const PNG_SRC = phoneRenderAsset.png;
-const SVG_FALLBACK = phoneRenderAsset.fallbackSvg;
+const PNG_SRC = "/wish-assets/phone/phone-render.png";
+const SVG_FALLBACK = "/wish-assets/phone/phone-render.svg";
 
 /** Custom hook: load PNG, fall back to SVG on error */
 function useAssetSrc(): string {
@@ -193,3 +193,4 @@ export default function FragmentedPhoneScene({
     </div>
   );
 }
+

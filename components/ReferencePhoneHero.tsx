@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { phoneShards, getUnlockedShardIndices } from "@/lib/fragmented-phone-map";
-import { phoneRenderAsset } from "@/lib/wish-assets";
+
 
 type ReferencePhoneHeroProps = {
   totalPieces: number;
@@ -297,3 +297,4 @@ export default function ReferencePhoneHero({
     </section>
   );
 }
+
