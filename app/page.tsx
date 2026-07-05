@@ -10,7 +10,6 @@ import FragmentedPhoneScene from "@/components/FragmentedPhoneScene";
 import SavePanel from "@/components/SavePanel";
 import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
- import AppUpdateNotice from "@/components/AppUpdateNotice";
 import ReferenceAppShell from "@/components/ReferenceAppShell";
 import WishHeaderRow from "@/components/WishHeaderRow";
 import ReferencePhoneHero from "@/components/ReferencePhoneHero";
@@ -256,7 +255,6 @@ export default function Home() {
       />
 
       <AchievementModal achievement={currentAchievement} onClose={closeAchievement} />
-      <AppUpdateNotice />
     </ReferenceAppShell>
   );
 }

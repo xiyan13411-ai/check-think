@@ -1,4 +1,4 @@
- "use client";
+﻿ "use client";
  
  import { motion } from "framer-motion";
  import { formatCurrency } from "@/lib/progress";
@@ -25,7 +25,6 @@
  
    return (
      <motion.div
-       className="rounded-2xl bg-white px-5 pb-5 pt-4 shadow-sm"
        initial={{ opacity: 0, y: 20 }}
        animate={{ opacity: 1, y: 0 }}
        transition={{ duration: 0.4, delay: 0.15 }}
@@ -34,12 +33,12 @@
        <div className="flex items-end justify-between">
          <div>
            <span className="text-[11px] font-medium text-stone-400">已存</span>
-           <p className="text-2xl font-bold text-stone-900 tabular-nums leading-tight">
+           <p className="text-[28px] font-bold leading-none text-stone-950 tabular-nums">
              {formatCurrency(currentAmount)}
            </p>
          </div>
          <div className="flex items-baseline gap-1">
-           <span className="text-3xl font-bold text-blue-500 tabular-nums">{progressPct}</span>
+           <span className="text-[34px] font-bold text-blue-500 tabular-nums">{progressPct}</span>
            <span className="text-[11px] font-medium text-stone-400">%</span>
          </div>
        </div>
@@ -78,7 +77,7 @@
  
        {/* Last record */}
        {lastRecordAmount !== undefined && (
-         <div className="mt-3 flex items-center justify-between rounded-xl bg-blue-50/50 px-3 py-2">
+         <div className="mt-3 flex items-center justify-between rounded-xl bg-blue-50 px-3 py-2">
            <span className="text-sm font-semibold text-blue-600 tabular-nums">
              刚刚存入 {formatCurrency(lastRecordAmount)}
            </span>
@@ -91,7 +90,7 @@
        {/* Primary save button */}
        <motion.button
          onClick={onPrimarySave}
-         className="mt-4 flex h-14 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-blue-400 text-base font-bold text-white shadow-lg shadow-blue-200/50"
+         className="mt-4 flex h-14 w-full items-center justify-center rounded-[18px] bg-blue-500 text-base font-bold text-white shadow-[0_10px_20px_rgba(59,130,246,0.28)] active:scale-[0.98]"
          whileTap={{ scale: 0.96 }}
        >
          存一笔
