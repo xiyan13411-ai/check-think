@@ -8,51 +8,50 @@ export type ProductAsset = {
   liveOpacity: number;
 };
 
-const version = "png3";
-const generated = (name: string) => `/wish-assets/generated/${name}-hero.png?v=${version}`;
+const generated = (name: string) => `/wish-assets/generated/${name}-hero.png`;
 
 const productRegistry: Partial<Record<WishType, ProductAsset>> = {
   macbook: {
     src: generated("macbook"),
     className: "h-[390px] w-[390px]",
-    ghostOpacity: 0.18,
-    liveOpacity: 0.9,
+    ghostOpacity: 0.55,
+    liveOpacity: 1,
   },
   phone: {
     src: generated("phone"),
     className: "h-[388px] w-[388px]",
-    ghostOpacity: 0.18,
-    liveOpacity: 0.9,
+    ghostOpacity: 0.55,
+    liveOpacity: 1,
   },
   camera: {
     src: generated("camera"),
     className: "h-[382px] w-[382px]",
-    ghostOpacity: 0.16,
-    liveOpacity: 0.86,
+    ghostOpacity: 0.52,
+    liveOpacity: 1,
   },
   travel: {
     src: generated("travel"),
     className: "h-[390px] w-[390px]",
-    ghostOpacity: 0.16,
-    liveOpacity: 0.86,
+    ghostOpacity: 0.52,
+    liveOpacity: 1,
   },
   gift: {
     src: generated("gift"),
     className: "h-[360px] w-[360px]",
-    ghostOpacity: 0.16,
-    liveOpacity: 0.88,
+    ghostOpacity: 0.52,
+    liveOpacity: 1,
   },
   home: {
     src: generated("home"),
     className: "h-[372px] w-[372px]",
-    ghostOpacity: 0.16,
-    liveOpacity: 0.86,
+    ghostOpacity: 0.52,
+    liveOpacity: 1,
   },
   earphone: {
     src: generated("earphone"),
     className: "h-[370px] w-[370px]",
-    ghostOpacity: 0.16,
-    liveOpacity: 0.86,
+    ghostOpacity: 0.52,
+    liveOpacity: 1,
   },
 };
 
