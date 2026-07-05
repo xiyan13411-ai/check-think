@@ -12,6 +12,12 @@
 
 > 🎯 V4 小红书Hero Scene 主视觉重构（当前阶段）
 
+> 🎯 V9 AI 视觉资产 + 纯文字 Prompt（当前阶段）
+
+✅ docs/AI_ASSET_PROMPTS_TEXT_ONLY.md — 无识图模型专用文字 Prompt
+✅ docs/REFERENCE_IMAGE_SOURCES.md — 手机背面参考图来源指引
+✅ Pure text prompts optimized for text-only AI image models
+
 > 🎯 V9 AI 视觉资产接入（当前阶段）
 
 ✅ public/wish-assets/phone/generated/ 目录 + README
