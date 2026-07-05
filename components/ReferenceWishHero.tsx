@@ -84,6 +84,8 @@ export default function ReferenceWishHero({
   const visualProgress = Math.min(1, progress * 1.85);
   const visibleCount = isPristine || isComplete ? 0 : Math.max(5, Math.ceil(visualProgress * posterShards.length));
   const shownShards = posterShards.slice(0, visibleCount);
+  const completeSrc = asset.completeSrc ?? asset.src;
+  const heroSrc = isComplete ? completeSrc : asset.src;
 
   return (
     <section className="relative mt-4 h-[440px] overflow-hidden rounded-[28px] bg-gradient-to-b from-[#fffdf8] via-[#f5efe4] to-[#e7dfd1] shadow-inner">
@@ -95,7 +97,7 @@ export default function ReferenceWishHero({
 
       <div className={`absolute left-1/2 top-[51%] -translate-x-1/2 -translate-y-1/2 ${asset.className}`}>
         <motion.img
-          src={asset.src}
+          src={heroSrc}
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain drop-shadow-[0_28px_38px_rgba(15,23,42,0.20)]"
