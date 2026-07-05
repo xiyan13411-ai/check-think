@@ -3,20 +3,9 @@ import type { AppState } from "@/types/app-state";
 import type { Goal } from "@/types/goal";
 import type { SavingRecord } from "@/types/record";
 
-export const STORAGE_KEY = "saving-puzzle-app:v1";
-
-function createDemoRecord(goal: Goal, amount = 100): SavingRecord {
-  const progressAfter = Math.min(goal.currentAmount / goal.targetAmount, 1);
-  return {
-    id: "demo-1",
-    goalId: goal.id,
-    amount,
-    createdAt: new Date().toISOString(),
-    progressAfter,
-    unlockedPieces: Math.floor(progressAfter * goal.totalPieces),
-    message: `刚刚存入 ¥${amount}`,
-  };
-}
+// v2 deliberately resets the dev/demo baseline so new visitors start from ¥0.
+// Old v1 localStorage stays untouched and can be ignored during current iteration.
+export const STORAGE_KEY = "saving-puzzle-app:v2";
 
 export function createDefaultAppState(): AppState {
   const preset = getWishPreset("macbook");
@@ -24,7 +13,7 @@ export function createDefaultAppState(): AppState {
     id: "default-goal",
     name: preset.name,
     targetAmount: preset.targetAmount,
-    currentAmount: preset.currentAmount,
+    currentAmount: 0,
     totalPieces: 40,
     wishType: preset.type,
     createdAt: new Date().toISOString(),
@@ -32,7 +21,7 @@ export function createDefaultAppState(): AppState {
 
   return {
     goal,
-    records: [createDemoRecord(goal)],
+    records: [],
     unlockedAchievements: [],
   };
 }
