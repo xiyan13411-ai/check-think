@@ -1,4 +1,4 @@
-export type WishType = "phone" | "macbook" | "camera" | "travel" | "gift" | "home";
+﻿export type WishType = "phone" | "macbook" | "camera" | "travel" | "gift" | "home" | "earphone";
 
 export type WishPreset = {
   type: WishType;
@@ -85,5 +85,6 @@ export function inferWishType(name: string | undefined): WishType {
   if (/旅行|旅游|trip|travel/i.test(safeName)) return "travel";
   if (/礼物|gift/i.test(safeName)) return "gift";
   if (/家|房|home/i.test(safeName)) return "home";
+  if (/耳机|earphone|ear/i.test(safeName)) return "earphone";
   return "phone";
 }

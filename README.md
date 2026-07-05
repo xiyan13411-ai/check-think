@@ -12,6 +12,9 @@
 
 > 🎯 V4 小红书Hero Scene 主视觉重构（当前阶段）
 
+✅ 新增 earphone 心愿类型（🎧 新耳机 ¥1,999）
+✅ 资产图替换为爆炸碎片视图风格（6组WebP）
+
 > 🎯 V10 参考效果图对齐——完整 App 外壳（当前阶段）
 
 ✅ ReferenceAppShell — iOS 风格状态栏+标题+底部 Tab Bar

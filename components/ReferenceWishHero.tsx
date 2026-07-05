@@ -88,6 +88,7 @@ function SimpleWishArt({ type }: { type: GenericWishType }) {
     travel: { emoji: "🧳", label: "旅行", bg: "from-teal-100 to-blue-100" },
     gift: { emoji: "🎁", label: "礼物", bg: "from-orange-100 to-pink-100" },
     home: { emoji: "🏠", label: "小家", bg: "from-emerald-100 to-lime-100" },
+    earphone: { emoji: "🎧", label: "耳机", bg: "from-sky-100 to-indigo-100" },
   }[type];
 
   return (
