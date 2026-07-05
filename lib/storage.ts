@@ -3,9 +3,9 @@ import type { AppState } from "@/types/app-state";
 import type { Goal } from "@/types/goal";
 import type { SavingRecord } from "@/types/record";
 
-// v3 resets the visual QA baseline again after the asset/puzzle rewrite.
+// v4 resets the QA baseline after switching every wish hero to generated product assets.
 // Old keys stay untouched, but the current app starts clean at ¥0.
-export const STORAGE_KEY = "saving-puzzle-app:v3";
+export const STORAGE_KEY = "saving-puzzle-app:v4";
 
 export function createDefaultAppState(): AppState {
   const preset = getWishPreset("macbook");
