@@ -1,21 +1,14 @@
-﻿"use client";
+"use client";
 
- import { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import GoalCard from "@/components/GoalCard";
-import WishHeroScene from "@/components/WishHeroScene";
- import AssetHeroScene from "@/components/AssetHeroScene";
-import FragmentedPhoneScene from "@/components/FragmentedPhoneScene";
-import SavePanel from "@/components/SavePanel";
-import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
 import ReferenceAppShell from "@/components/ReferenceAppShell";
 import WishHeaderRow from "@/components/WishHeaderRow";
 import ReferencePhoneHero from "@/components/ReferencePhoneHero";
 import ReferenceProgressCard from "@/components/ReferenceProgressCard";
 
-import { loadAppState, saveAppState, resetAppState } from "@/lib/storage";
+import { loadAppState, saveAppState } from "@/lib/storage";
 import { calculateProgress, calculateUnlockedPieces } from "@/lib/progress";
 import { getRandomMessage } from "@/lib/copywriting";
 import { checkNewAchievements } from "@/lib/achievements";
@@ -23,10 +16,8 @@ import { vibrate } from "@/lib/vibration";
 import type { AppState } from "@/types/app-state";
 import type { SavingRecord } from "@/types/record";
 import type { Achievement } from "@/types/achievement";
- 
-// Toggle: "fragmented" = FragmentedPhoneScene (V7), "asset" = AssetHeroScene (V5), "svg" = WishHeroScene (V4)
-const HERO_MODE: "fragmented" | "asset" | "svg" = "fragmented";
- 
+
+type SaveAnimationMode = "warmup" | "unlock" | "complete";
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
@@ -34,93 +25,68 @@ function generateId(): string {
 
 export default function Home() {
   const [state, setState] = useState<AppState | null>(null);
-  const [flashAmount, setFlashAmount] = useState(false);
-  const [saveMessage, setSaveMessage] = useState<string | null>(null);
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [newlyUnlockedPieceIndexes, setNewlyUnlockedPieceIndexes] = useState<number[]>([]);
-  const [showResetConfirm, setShowResetConfirm] = useState(false);
- const [warmUpNextPiece, setWarmUpNextPiece] = useState(false);
-   type SaveAnimationMode = "warmup" | "unlock" | "complete";
-   const [saveAnimation, setSaveAnimation] = useState<{
-     key: number;
-     mode: SaveAnimationMode;
-     count: number;
-   } | null>(null);
-   const animKeyRef = useRef(0);
-   const initialized = useRef(false);
+  const [warmUpNextPiece, setWarmUpNextPiece] = useState(false);
+  const [saveAnimation, setSaveAnimation] = useState<{
+    key: number;
+    mode: SaveAnimationMode;
+    count: number;
+  } | null>(null);
 
-  // Load state on mount
+  const animKeyRef = useRef(0);
+  const initialized = useRef(false);
+
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
-    const loaded = loadAppState();
-    setState(loaded);
-    setNewlyUnlockedPieceIndexes([]);
+    setState(loadAppState());
   }, []);
 
- const handleSave = useCallback(
-   (amount: number) => {
-     if (!state) return;
-     if (amount <= 0 || isNaN(amount)) return;
+  const handleSave = useCallback(
+    (rawAmount: number) => {
+      if (!state) return;
 
-     vibrate();
- 
-      // Generate animation key before computing state changes
+      const amount = Math.floor(Number(rawAmount));
+      if (!Number.isFinite(amount) || amount <= 0) return;
+
+      const remaining = Math.max(state.goal.targetAmount - state.goal.currentAmount, 0);
+      if (remaining <= 0) return;
+
+      const finalAmount = Math.min(amount, remaining);
+      vibrate();
+
       const animKey = ++animKeyRef.current;
+      const oldProgress = calculateProgress(state.goal.currentAmount, state.goal.targetAmount);
+      const oldUnlocked = calculateUnlockedPieces(oldProgress, state.goal.totalPieces);
 
-      // Old unlocked count (before this save)
-      const oldProgress = calculateProgress(
-        state.goal.currentAmount,
-        state.goal.targetAmount,
-      );
-      const oldUnlocked = calculateUnlockedPieces(
-        oldProgress,
-        state.goal.totalPieces,
-      );
-
-      // New values after save
-      const newAmount = state.goal.currentAmount + amount;
+      const newAmount = Math.min(state.goal.currentAmount + finalAmount, state.goal.targetAmount);
       const newProgress = calculateProgress(newAmount, state.goal.targetAmount);
-      const newUnlocked = calculateUnlockedPieces(
-        newProgress,
-        state.goal.totalPieces,
-      );
-
-      // Compute newly unlocked piece indexes
+      const newUnlocked = calculateUnlockedPieces(newProgress, state.goal.totalPieces);
       const newlyUnlocked = Array.from(
         { length: Math.max(newUnlocked - oldUnlocked, 0) },
-        (_, idx) => oldUnlocked + idx,
+        (_, index) => oldUnlocked + index,
       );
 
-      // Differentiated message
-     const message = getRandomMessage(newlyUnlocked.length > 0);
- 
-      // Determine save animation mode
-      let animMode: SaveAnimationMode;
-      let animCount: number;
-      if (newProgress >= 1) {
-        animMode = "complete";
-        animCount = 10;
-      } else if (newlyUnlocked.length > 0) {
-        animMode = "unlock";
-        animCount = Math.min(4 + newlyUnlocked.length, 8);
-      } else {
-        animMode = "warmup";
-        animCount = 2;
-      }
+      const message = getRandomMessage(newlyUnlocked.length > 0);
+      const animMode: SaveAnimationMode =
+        newProgress >= 1 ? "complete" : newlyUnlocked.length > 0 ? "unlock" : "warmup";
+      const animCount =
+        animMode === "complete" ? 10 : animMode === "unlock" ? Math.min(4 + newlyUnlocked.length, 8) : 2;
+
       setSaveAnimation({ key: animKey, mode: animMode, count: animCount });
 
       const record: SavingRecord = {
         id: generateId(),
         goalId: state.goal.id,
-        amount,
+        amount: finalAmount,
         createdAt: new Date().toISOString(),
         progressAfter: newProgress,
         unlockedPieces: newUnlocked,
         message,
       };
 
-      const newState: AppState = {
+      const nextState: AppState = {
         goal: {
           ...state.goal,
           currentAmount: newAmount,
@@ -129,108 +95,45 @@ export default function Home() {
         unlockedAchievements: [...state.unlockedAchievements],
       };
 
-      // Check achievements
-      const newAchievement = checkNewAchievements(
-        newProgress,
-        newState.unlockedAchievements,
-      );
+      const newAchievement = checkNewAchievements(newProgress, nextState.unlockedAchievements);
       if (newAchievement) {
-        newState.unlockedAchievements = [
-          ...newState.unlockedAchievements,
-          newAchievement.id,
-        ];
+        nextState.unlockedAchievements = [...nextState.unlockedAchievements, newAchievement.id];
         setCurrentAchievement(newAchievement);
       }
 
-      setState(newState);
-      saveAppState(newState);
+      setState(nextState);
+      saveAppState(nextState);
 
-      // Set newly unlocked for animation
       if (newlyUnlocked.length > 0) {
         setNewlyUnlockedPieceIndexes(newlyUnlocked);
-        setTimeout(() => setNewlyUnlockedPieceIndexes([]), 1200);
         setWarmUpNextPiece(false);
+        window.setTimeout(() => setNewlyUnlockedPieceIndexes([]), 1200);
       } else {
-        // No piece unlocked — warm up the next one
-        if (oldUnlocked < state.goal.totalPieces) {
-          setWarmUpNextPiece(true);
-          setTimeout(() => setWarmUpNextPiece(false), 1500);
-        }
+        setWarmUpNextPiece(true);
+        window.setTimeout(() => setWarmUpNextPiece(false), 1200);
       }
 
-      // Flash and message
-     setFlashAmount(true);
-     setSaveMessage(message);
-      setTimeout(() => setSaveAnimation(null), 2000);
-     setTimeout(() => setFlashAmount(false), 500);
-     setTimeout(() => setSaveMessage(null), 2500);
+      window.setTimeout(() => setSaveAnimation(null), 1800);
     },
     [state],
   );
-
-  const handleReset = useCallback(() => {
-    const defaultState = resetAppState();
-    setState(defaultState);
-    setNewlyUnlockedPieceIndexes([]);
-    setCurrentAchievement(null);
-    setSaveMessage(null);
-    setShowResetConfirm(false);
-  }, []);
 
   const closeAchievement = useCallback(() => {
     setCurrentAchievement(null);
   }, []);
 
-  // Don't render until state is loaded
   if (!state) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-orange-50">
+      <div className="flex min-h-screen items-center justify-center bg-[#f5f2eb]">
         <div className="text-stone-400">加载中...</div>
       </div>
     );
   }
 
-  const progress = calculateProgress(
-    state.goal.currentAmount,
-    state.goal.targetAmount,
-  );
-  const unlockedPieces = calculateUnlockedPieces(
-    progress,
-    state.goal.totalPieces,
-  );
+  const progress = calculateProgress(state.goal.currentAmount, state.goal.targetAmount);
+  const unlockedPieces = calculateUnlockedPieces(progress, state.goal.totalPieces);
+  const lastRecord = state.records[state.records.length - 1];
 
-  const heroScene =
-    HERO_MODE === "fragmented" ? (
-      <FragmentedPhoneScene
-        totalPieces={state.goal.totalPieces}
-        unlockedPieces={unlockedPieces}
-        currentAmount={state.goal.currentAmount}
-        targetAmount={state.goal.targetAmount}
-        newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
-        warmUpNextPiece={warmUpNextPiece}
-        saveAnimation={saveAnimation}
-      />
-    ) : HERO_MODE === "asset" ? (
-      <AssetHeroScene
-        totalPieces={state.goal.totalPieces}
-        unlockedPieces={unlockedPieces}
-        currentAmount={state.goal.currentAmount}
-        targetAmount={state.goal.targetAmount}
-        newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
-        warmUpNextPiece={warmUpNextPiece}
-        saveAnimation={saveAnimation}
-      />
-    ) : (
-      <WishHeroScene
-        totalPieces={state.goal.totalPieces}
-        unlockedPieces={unlockedPieces}
-        currentAmount={state.goal.currentAmount}
-        targetAmount={state.goal.targetAmount}
-        newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
-        warmUpNextPiece={warmUpNextPiece}
-        saveAnimation={saveAnimation}
-      />
-    );
   return (
     <ReferenceAppShell>
       <WishHeaderRow title={state.goal.name} streakDays={7} />
@@ -249,9 +152,9 @@ export default function Home() {
         currentAmount={state.goal.currentAmount}
         targetAmount={state.goal.targetAmount}
         progress={progress}
-        lastRecordAmount={state.records.length > 0 ? state.records[state.records.length - 1].amount : undefined}
-        lastRecordTimeLabel="今天"
-        onPrimarySave={() => handleSave(80)}
+        lastRecordAmount={lastRecord?.amount}
+        lastRecordTimeLabel={lastRecord ? "今天" : undefined}
+        onSaveAmount={handleSave}
       />
 
       <AchievementModal achievement={currentAchievement} onClose={closeAchievement} />
