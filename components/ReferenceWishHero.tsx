@@ -15,13 +15,6 @@ type ReferenceWishHeroProps = {
   } | null;
 };
 
-type ProductAsset = {
-  src: string;
-  width: number;
-  height: number;
-  className: string;
-};
-
 type ProductShard = {
   id: string;
   clipPath: string;
@@ -30,60 +23,38 @@ type ProductShard = {
   rotate: number;
   scale: number;
   z: number;
-  unlockAt: number;
 };
 
 type GenericWishType = Exclude<WishType, "macbook" | "phone">;
 
-const productAssets: Record<"macbook" | "phone", ProductAsset> = {
+const productAssets: Record<"macbook" | "phone", { src: string; className: string }> = {
   macbook: {
     src: "/wish-assets/macbook/macbook-render.svg",
-    width: 340,
-    height: 312,
-    className: "h-[312px] w-[340px]",
+    className: "h-[340px] w-[397px]",
   },
   phone: {
     src: "/wish-assets/phone/phone-render.svg",
-    width: 210,
-    height: 430,
     className: "h-[430px] w-[210px]",
   },
 };
 
 const productShards: ProductShard[] = [
-  { id: "top-left", clipPath: "polygon(9% 8%, 35% 5%, 42% 25%, 22% 35%, 8% 25%)", x: -130, y: -92, rotate: -24, scale: 0.92, z: 26, unlockAt: 0.05 },
-  { id: "top-screen", clipPath: "polygon(34% 6%, 62% 7%, 60% 28%, 42% 32%, 36% 22%)", x: -18, y: -126, rotate: 17, scale: 0.9, z: 30, unlockAt: 0.1 },
-  { id: "top-right", clipPath: "polygon(62% 7%, 91% 10%, 87% 36%, 64% 30%)", x: 128, y: -96, rotate: 24, scale: 0.9, z: 25, unlockAt: 0.14 },
-  { id: "left-screen", clipPath: "polygon(8% 24%, 28% 35%, 31% 58%, 9% 66%, 4% 45%)", x: -162, y: 18, rotate: -18, scale: 0.94, z: 29, unlockAt: 0.18 },
-  { id: "screen-core", clipPath: "polygon(28% 31%, 58% 28%, 64% 55%, 39% 63%, 30% 50%)", x: 14, y: -48, rotate: 12, scale: 0.96, z: 36, unlockAt: 0.22 },
-  { id: "screen-right", clipPath: "polygon(59% 30%, 88% 35%, 82% 63%, 63% 57%)", x: 150, y: 8, rotate: 19, scale: 0.92, z: 31, unlockAt: 0.27 },
-  { id: "hinge-left", clipPath: "polygon(17% 61%, 40% 58%, 44% 73%, 22% 78%, 8% 70%)", x: -130, y: 106, rotate: 21, scale: 0.9, z: 33, unlockAt: 0.32 },
-  { id: "keyboard-main", clipPath: "polygon(35% 59%, 66% 58%, 72% 78%, 41% 82%, 35% 72%)", x: 12, y: 120, rotate: -11, scale: 0.92, z: 38, unlockAt: 0.38 },
-  { id: "keyboard-right", clipPath: "polygon(66% 59%, 93% 66%, 87% 84%, 70% 79%)", x: 136, y: 132, rotate: -19, scale: 0.9, z: 32, unlockAt: 0.45 },
-  { id: "palm-left", clipPath: "polygon(10% 73%, 38% 80%, 36% 97%, 6% 91%)", x: -98, y: 194, rotate: -13, scale: 0.93, z: 34, unlockAt: 0.52 },
-  { id: "trackpad", clipPath: "polygon(38% 78%, 62% 77%, 61% 95%, 37% 96%)", x: 0, y: 198, rotate: 10, scale: 0.94, z: 40, unlockAt: 0.6 },
-  { id: "palm-right", clipPath: "polygon(61% 78%, 91% 83%, 97% 96%, 62% 96%)", x: 112, y: 190, rotate: 18, scale: 0.92, z: 35, unlockAt: 0.68 },
-  { id: "tiny-left", clipPath: "polygon(0% 50%, 12% 55%, 11% 78%, 0% 73%)", x: -198, y: 86, rotate: 29, scale: 0.78, z: 41, unlockAt: 0.76 },
-  { id: "tiny-right", clipPath: "polygon(88% 42%, 100% 50%, 97% 72%, 84% 63%)", x: 198, y: 80, rotate: -28, scale: 0.78, z: 42, unlockAt: 0.84 },
-  { id: "bottom-edge", clipPath: "polygon(19% 93%, 82% 92%, 96% 100%, 8% 100%)", x: 0, y: 246, rotate: -7, scale: 0.88, z: 44, unlockAt: 0.92 },
+  { id: "top-left", clipPath: "polygon(9% 8%, 35% 5%, 42% 25%, 22% 35%, 8% 25%)", x: -140, y: -100, rotate: -24, scale: 0.92, z: 26 },
+  { id: "top-screen", clipPath: "polygon(34% 6%, 62% 7%, 60% 28%, 42% 32%, 36% 22%)", x: -20, y: -136, rotate: 17, scale: 0.9, z: 30 },
+  { id: "top-right", clipPath: "polygon(62% 7%, 91% 10%, 87% 36%, 64% 30%)", x: 140, y: -104, rotate: 24, scale: 0.9, z: 25 },
+  { id: "left-screen", clipPath: "polygon(8% 24%, 28% 35%, 31% 58%, 9% 66%, 4% 45%)", x: -176, y: 18, rotate: -18, scale: 0.94, z: 29 },
+  { id: "screen-core", clipPath: "polygon(28% 31%, 58% 28%, 64% 55%, 39% 63%, 30% 50%)", x: 16, y: -52, rotate: 12, scale: 0.96, z: 36 },
+  { id: "screen-right", clipPath: "polygon(59% 30%, 88% 35%, 82% 63%, 63% 57%)", x: 164, y: 8, rotate: 19, scale: 0.92, z: 31 },
+  { id: "hinge-left", clipPath: "polygon(17% 61%, 40% 58%, 44% 73%, 22% 78%, 8% 70%)", x: -142, y: 112, rotate: 21, scale: 0.9, z: 33 },
+  { id: "keyboard-main", clipPath: "polygon(35% 59%, 66% 58%, 72% 78%, 41% 82%, 35% 72%)", x: 12, y: 128, rotate: -11, scale: 0.92, z: 38 },
+  { id: "keyboard-right", clipPath: "polygon(66% 59%, 93% 66%, 87% 84%, 70% 79%)", x: 146, y: 140, rotate: -19, scale: 0.9, z: 32 },
+  { id: "palm-left", clipPath: "polygon(10% 73%, 38% 80%, 36% 97%, 6% 91%)", x: -106, y: 206, rotate: -13, scale: 0.93, z: 34 },
+  { id: "trackpad", clipPath: "polygon(38% 78%, 62% 77%, 61% 95%, 37% 96%)", x: 0, y: 212, rotate: 10, scale: 0.94, z: 40 },
+  { id: "palm-right", clipPath: "polygon(61% 78%, 91% 83%, 97% 96%, 62% 96%)", x: 122, y: 202, rotate: 18, scale: 0.92, z: 35 },
+  { id: "tiny-left", clipPath: "polygon(0% 50%, 12% 55%, 11% 78%, 0% 73%)", x: -210, y: 92, rotate: 29, scale: 0.78, z: 41 },
+  { id: "tiny-right", clipPath: "polygon(88% 42%, 100% 50%, 97% 72%, 84% 63%)", x: 210, y: 86, rotate: -28, scale: 0.78, z: 42 },
+  { id: "bottom-edge", clipPath: "polygon(19% 93%, 82% 92%, 96% 100%, 8% 100%)", x: 0, y: 258, rotate: -7, scale: 0.88, z: 44 },
 ];
-
-function SimpleWishArt({ type }: { type: GenericWishType }) {
-  const config = {
-    camera: { emoji: "📷", label: "相机", bg: "from-violet-100 to-blue-100" },
-    travel: { emoji: "🧳", label: "旅行", bg: "from-teal-100 to-blue-100" },
-    gift: { emoji: "🎁", label: "礼物", bg: "from-orange-100 to-pink-100" },
-    home: { emoji: "🏠", label: "小家", bg: "from-emerald-100 to-lime-100" },
-  }[type];
-
-  return (
-    <div className={`relative flex h-[300px] w-[300px] items-center justify-center rounded-[42px] bg-gradient-to-br ${config.bg} shadow-[0_28px_50px_rgba(15,23,42,0.12)]`}>
-      <div className="absolute inset-6 rounded-[34px] bg-white/45 blur-sm" />
-      <div className="relative text-[92px] drop-shadow-[0_20px_28px_rgba(15,23,42,0.16)]">{config.emoji}</div>
-      <div className="absolute bottom-9 rounded-full bg-white/70 px-4 py-1 text-xs font-semibold text-stone-500 shadow-sm backdrop-blur">{config.label}心愿</div>
-    </div>
-  );
-}
 
 function Sparkles() {
   return (
@@ -111,13 +82,40 @@ function LightTrails() {
   );
 }
 
-function AssetFragmentHero({ type, progress, saveAnimation, warmUpNextPiece }: { type: "macbook" | "phone"; progress: number; saveAnimation: ReferenceWishHeroProps["saveAnimation"]; warmUpNextPiece: boolean }) {
+function SimpleWishArt({ type }: { type: GenericWishType }) {
+  const config = {
+    camera: { emoji: "📷", label: "相机", bg: "from-violet-100 to-blue-100" },
+    travel: { emoji: "🧳", label: "旅行", bg: "from-teal-100 to-blue-100" },
+    gift: { emoji: "🎁", label: "礼物", bg: "from-orange-100 to-pink-100" },
+    home: { emoji: "🏠", label: "小家", bg: "from-emerald-100 to-lime-100" },
+  }[type];
+
+  return (
+    <div className={`relative flex h-[300px] w-[300px] items-center justify-center rounded-[42px] bg-gradient-to-br ${config.bg} shadow-[0_28px_50px_rgba(15,23,42,0.12)]`}>
+      <div className="absolute inset-6 rounded-[34px] bg-white/45 blur-sm" />
+      <div className="relative text-[92px] drop-shadow-[0_20px_28px_rgba(15,23,42,0.16)]">{config.emoji}</div>
+      <div className="absolute bottom-9 rounded-full bg-white/70 px-4 py-1 text-xs font-semibold text-stone-500 shadow-sm backdrop-blur">{config.label}心愿</div>
+    </div>
+  );
+}
+
+function AssetFragmentHero({
+  type,
+  progress,
+  saveAnimation,
+  warmUpNextPiece,
+}: {
+  type: "macbook" | "phone";
+  progress: number;
+  saveAnimation: ReferenceWishHeroProps["saveAnimation"];
+  warmUpNextPiece: boolean;
+}) {
   const asset = productAssets[type];
   const isPristine = progress <= 0;
   const isComplete = progress >= 1;
-  const visualProgress = Math.min(1, progress * 2.1);
-  const visibleCount = isPristine ? 0 : Math.max(6, Math.ceil(visualProgress * productShards.length));
-  const shownShards = isComplete ? productShards : productShards.slice(0, visibleCount);
+  const visualProgress = Math.min(1, progress * 2.15);
+  const visibleCount = isPristine || isComplete ? 0 : Math.max(6, Math.ceil(visualProgress * productShards.length));
+  const shownShards = productShards.slice(0, visibleCount);
 
   return (
     <div className={`absolute left-1/2 top-[51%] -translate-x-1/2 -translate-y-1/2 ${asset.className}`}>
@@ -129,11 +127,14 @@ function AssetFragmentHero({ type, progress, saveAnimation, warmUpNextPiece }: {
         initial={false}
         animate={saveAnimation ? { scale: [1, 1.025, 1], rotate: [0, -0.6, 0] } : { scale: 1, rotate: 0 }}
         transition={{ duration: 0.58, ease: "easeOut" }}
-        style={{ opacity: isComplete ? 1 : isPristine ? 0.16 : 0.26, filter: isPristine ? "grayscale(0.75) saturate(0.6)" : "grayscale(0.2)" }}
+        style={{
+          opacity: isComplete ? 1 : isPristine ? 0.16 : 0.32,
+          filter: isComplete ? "none" : isPristine ? "grayscale(0.75) saturate(0.6)" : "grayscale(0.12)",
+        }}
       />
 
       {shownShards.map((shard, index) => {
-        const finalPull = isComplete ? 1 : Math.min(0.74, visualProgress * 0.72);
+        const finalPull = Math.min(0.78, visualProgress * 0.74);
         const targetX = shard.x * (1 - finalPull);
         const targetY = shard.y * (1 - finalPull);
         const targetRotate = shard.rotate * (1 - finalPull);
@@ -213,8 +214,6 @@ function GenericHero({ type, progress, saveAnimation }: { type: GenericWishType;
 export default function ReferenceWishHero({ wishType, currentAmount, targetAmount, warmUpNextPiece = false, saveAnimation = null }: ReferenceWishHeroProps) {
   const progress = Math.min(currentAmount / targetAmount, 1);
   const isComplete = progress >= 1;
-  const assetType = wishType === "phone" || wishType === "macbook" ? wishType : null;
-  const genericType = wishType as GenericWishType;
 
   return (
     <section className="relative mt-4 h-[440px] overflow-hidden rounded-[28px] bg-gradient-to-b from-[#fffdf8] via-[#f5f0e7] to-[#e7dfd1] shadow-inner">
@@ -224,10 +223,10 @@ export default function ReferenceWishHero({ wishType, currentAmount, targetAmoun
       <Sparkles />
       <LightTrails />
 
-      {assetType ? (
-        <AssetFragmentHero type={assetType} progress={progress} saveAnimation={saveAnimation} warmUpNextPiece={warmUpNextPiece} />
+      {wishType === "phone" || wishType === "macbook" ? (
+        <AssetFragmentHero type={wishType} progress={progress} saveAnimation={saveAnimation} warmUpNextPiece={warmUpNextPiece} />
       ) : (
-        <GenericHero type={genericType} progress={progress} saveAnimation={saveAnimation} />
+        <GenericHero type={wishType} progress={progress} saveAnimation={saveAnimation} />
       )}
 
       {saveAnimation && (
