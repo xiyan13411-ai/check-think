@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import type { WishType } from "@/lib/wish-presets";
@@ -20,7 +20,8 @@ type ProductAsset = {
   className: string;
   ghostOpacity: number;
   liveOpacity: number;
-};
+    },
+  };
 
 type ProductShard = {
   id: string;
@@ -69,7 +70,13 @@ const productAssets: Record<WishType, ProductAsset> = {
     ghostOpacity: 0.15,
     liveOpacity: 0.33,
   },
-};
+  earphone: {
+    src: "/wish-assets/generated/earphone-hero.webp",
+    className: "h-[370px] w-[370px]",
+    ghostOpacity: 0.15,
+    liveOpacity: 0.33,
+    },
+  };
 
 const productShards: ProductShard[] = [
   { id: "upper-left", clipPath: "polygon(9% 9%, 34% 5%, 42% 24%, 22% 35%, 7% 27%)", x: -154, y: -106, rotate: -25, scale: 0.9, z: 28 },
