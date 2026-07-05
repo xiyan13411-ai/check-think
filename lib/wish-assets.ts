@@ -49,7 +49,7 @@ const productRegistry: Partial<Record<WishType, ProductAsset>> = {
     liveOpacity: 0.35,
   },
   earphone: {
-    src: "/wish-assets/generated/earphone-hero.svg",
+    src: "/wish-assets/generated/earphone-hero.webp",
     className: "h-[370px] w-[370px]",
     ghostOpacity: 0.14,
     liveOpacity: 0.35,
