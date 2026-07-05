@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import AchievementModal from "@/components/AchievementModal";
 import ReferenceAppShell, { type AppTab } from "@/components/ReferenceAppShell";
@@ -30,23 +30,10 @@ function createGoalFromPreset(preset: WishPreset): Goal {
     id: `goal-${preset.type}`,
     name: preset.name,
     targetAmount: preset.targetAmount,
-    currentAmount: preset.currentAmount,
+    currentAmount: 0,
     totalPieces: 40,
     wishType: preset.type,
     createdAt: new Date().toISOString(),
-  };
-}
-
-function createRecord(goal: Goal, amount: number): SavingRecord {
-  const progressAfter = calculateProgress(goal.currentAmount, goal.targetAmount);
-  return {
-    id: generateId(),
-    goalId: goal.id,
-    amount,
-    createdAt: new Date().toISOString(),
-    progressAfter,
-    unlockedPieces: calculateUnlockedPieces(progressAfter, goal.totalPieces),
-    message: `刚刚存入 ¥${amount}`,
   };
 }
 
@@ -166,7 +153,7 @@ export default function Home() {
       const goal = createGoalFromPreset(preset);
       const nextState: AppState = {
         goal,
-        records: [createRecord(goal, type === "macbook" ? 100 : 80)],
+        records: [],
         unlockedAchievements: [],
       };
       setCurrentAchievement(null);
@@ -227,7 +214,6 @@ export default function Home() {
   const wishType = state.goal.wishType ?? "macbook";
   const preset = getWishPreset(wishType);
   const progress = calculateProgress(state.goal.currentAmount, state.goal.targetAmount);
-  const unlockedPieces = calculateUnlockedPieces(progress, state.goal.totalPieces);
   const lastRecord = state.records[state.records.length - 1];
 
   const content = activeTab === "wish" ? (
@@ -360,7 +346,7 @@ export default function Home() {
           onClick={handleResetDemo}
           className="mt-4 h-12 w-full rounded-2xl bg-stone-100 text-sm font-semibold text-stone-500 active:scale-[0.99]"
         >
-          重置为演示数据
+          重置为 0 元初始数据
         </button>
       </div>
     </section>
