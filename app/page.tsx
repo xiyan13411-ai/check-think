@@ -11,6 +11,10 @@ import SavePanel from "@/components/SavePanel";
 import HistoryReceipt from "@/components/HistoryReceipt";
 import AchievementModal from "@/components/AchievementModal";
  import AppUpdateNotice from "@/components/AppUpdateNotice";
+import ReferenceAppShell from "@/components/ReferenceAppShell";
+import WishHeaderRow from "@/components/WishHeaderRow";
+import ReferencePhoneHero from "@/components/ReferencePhoneHero";
+import ReferenceProgressCard from "@/components/ReferenceProgressCard";
 
 import { loadAppState, saveAppState, resetAppState } from "@/lib/storage";
 import { calculateProgress, calculateUnlockedPieces } from "@/lib/progress";
@@ -229,92 +233,30 @@ export default function Home() {
       />
     );
   return (
-    <main className="safe-area-bottom min-h-screen bg-orange-50 px-4 py-6 text-stone-900">
-      <div className="mx-auto flex w-full max-w-md flex-col gap-4">
-        {/* Top greeting area */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <h1 className="text-lg font-bold text-pink-500">愿望拼图存钱</h1>
-          <p className="mt-0.5 text-xs text-stone-400">
-            每存一笔钱，愿望就拼回来一块
-          </p>
-        </motion.div>
+    <ReferenceAppShell>
+      <WishHeaderRow title={state.goal.name} streakDays={7} />
 
-        {/* Save message toast */}
-        <AnimatePresence>
-          {saveMessage && (
-            <motion.div
-              className="rounded-2xl bg-white/80 px-4 py-3 text-center text-sm text-stone-600 shadow-sm backdrop-blur"
-              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-            >
-              {saveMessage}
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <ReferencePhoneHero
+        totalPieces={state.goal.totalPieces}
+        unlockedPieces={unlockedPieces}
+        currentAmount={state.goal.currentAmount}
+        targetAmount={state.goal.targetAmount}
+        newlyUnlockedPieceIndexes={newlyUnlockedPieceIndexes}
+        warmUpNextPiece={warmUpNextPiece}
+        saveAnimation={saveAnimation}
+      />
 
-        {/* Goal card */}
-        <GoalCard
-          goalName={state.goal.name}
-          currentAmount={state.goal.currentAmount}
-          targetAmount={state.goal.targetAmount}
-          progress={progress}
-          flashAmount={flashAmount}
-        />
+      <ReferenceProgressCard
+        currentAmount={state.goal.currentAmount}
+        targetAmount={state.goal.targetAmount}
+        progress={progress}
+        lastRecordAmount={state.records.length > 0 ? state.records[state.records.length - 1].amount : undefined}
+        lastRecordTimeLabel="今天"
+        onPrimarySave={() => handleSave(80)}
+      />
 
-        {heroScene}
-        {/* Save panel */}
-        <SavePanel onSave={handleSave} />
-
-        {/* History receipts */}
-        <HistoryReceipt records={state.records} />
-
-        {/* Reset button */}
-        <div className="mt-2 text-center">
-          {showResetConfirm ? (
-            <div className="flex flex-col items-center gap-2">
-              <p className="text-xs text-stone-400">
-                确认重置所有数据？当前存钱记录将全部清空。
-              </p>
-              <div className="flex gap-3">
-                <button
-                  onClick={handleReset}
-                  className="text-xs text-red-400 underline underline-offset-2"
-                >
-                  确认重置
-                </button>
-                <button
-                  onClick={() => setShowResetConfirm(false)}
-                  className="text-xs text-stone-400 underline underline-offset-2"
-                >
-                  取消
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button
-              onClick={() => setShowResetConfirm(true)}
-              className="text-xs text-stone-300 hover:text-stone-400 transition-colors"
-            >
-              重置测试数据
-            </button>
-          )}
-        </div>
-
-        {/* Achievement modal */}
-        <AchievementModal
-          achievement={currentAchievement}
-          onClose={closeAchievement}
-        />
- 
-        <AppUpdateNotice />
-      </div>
-    </main>
+      <AchievementModal achievement={currentAchievement} onClose={closeAchievement} />
+      <AppUpdateNotice />
+    </ReferenceAppShell>
   );
 }

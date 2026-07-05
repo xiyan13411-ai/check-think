@@ -12,6 +12,15 @@
 
 > 🎯 V4 小红书Hero Scene 主视觉重构（当前阶段）
 
+> 🎯 V10 参考效果图对齐——完整 App 外壳（当前阶段）
+
+✅ ReferenceAppShell — iOS 风格状态栏+标题+底部 Tab Bar
+✅ WishHeaderRow — 愿望标题行（缩略图+名称+连续天数）
+✅ ReferencePhoneHero — 纯 Hero 组件（放大手机+淡米白背景+光线弧）
+✅ ReferenceProgressCard — 底部进度卡（金额+蓝色进度条+存一笔按钮）
+✅ 默认演示数据 ¥7,999 / ¥1,280 / 16% / 最近存入 ¥80
+✅ 保留 V1-V9 全部回退路径
+
 > 🎯 V9 AI 视觉资产 + 纯文字 Prompt（当前阶段）
 
 ✅ docs/AI_ASSET_PROMPTS_TEXT_ONLY.md — 无识图模型专用文字 Prompt

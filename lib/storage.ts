@@ -7,16 +7,26 @@ export const STORAGE_KEY = "saving-puzzle-app:v1";
 export function createDefaultAppState(): AppState {
   const goal: Goal = {
     id: "default-goal",
-    name: "新手机基金",
-    targetAmount: 10000,
-    currentAmount: 0,
+    name: "新 iPhone",
+    targetAmount: 7999,
+    currentAmount: 1280,
     totalPieces: 40,
     createdAt: new Date().toISOString(),
   };
 
   return {
     goal,
-    records: [],
+    records: [
+      {
+        id: "demo-1",
+        goalId: "default-goal",
+        amount: 80,
+        createdAt: new Date().toISOString(),
+        progressAfter: 1280 / 7999,
+        unlockedPieces: Math.floor((1280 / 7999) * 40),
+        message: "刚刚存入 ¥80",
+      },
+    ],
     unlockedAchievements: [],
   };
 }
