@@ -1,4 +1,4 @@
-﻿export type WishType = "phone" | "macbook" | "camera" | "travel" | "gift" | "home" | "earphone";
+export type WishType = "phone" | "macbook" | "camera" | "travel" | "gift" | "home" | "earphone";
 
 export type WishPreset = {
   type: WishType;
@@ -72,6 +72,16 @@ export const wishPresets: WishPreset[] = [
     thumbnail: "🏠",
     accent: "#22c55e",
   },
+  {
+    type: "earphone",
+    name: "新耳机",
+    shortName: "耳机",
+    targetAmount: 2499,
+    currentAmount: 0,
+    streakDays: 0,
+    thumbnail: "🎧",
+    accent: "#6366f1",
+  },
 ];
 
 export function getWishPreset(type: WishType | string | undefined): WishPreset {
@@ -85,6 +95,6 @@ export function inferWishType(name: string | undefined): WishType {
   if (/旅行|旅游|trip|travel/i.test(safeName)) return "travel";
   if (/礼物|gift/i.test(safeName)) return "gift";
   if (/家|房|home/i.test(safeName)) return "home";
-  if (/耳机|earphone|ear/i.test(safeName)) return "earphone";
+  if (/耳机/i.test(safeName)) return "earphone";
   return "phone";
 }
