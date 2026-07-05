@@ -3,9 +3,9 @@ import type { AppState } from "@/types/app-state";
 import type { Goal } from "@/types/goal";
 import type { SavingRecord } from "@/types/record";
 
-// v2 deliberately resets the dev/demo baseline so new visitors start from ¥0.
-// Old v1 localStorage stays untouched and can be ignored during current iteration.
-export const STORAGE_KEY = "saving-puzzle-app:v2";
+// v3 resets the visual QA baseline again after the asset/puzzle rewrite.
+// Old keys stay untouched, but the current app starts clean at ¥0.
+export const STORAGE_KEY = "saving-puzzle-app:v3";
 
 export function createDefaultAppState(): AppState {
   const preset = getWishPreset("macbook");
