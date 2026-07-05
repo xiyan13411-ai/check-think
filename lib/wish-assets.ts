@@ -3,6 +3,7 @@ import type { WishType } from "@/lib/wish-presets";
 export type ProductAsset = {
   src: string;
   completeSrc?: string;
+  fallbackSrcs?: string[];
   className: string;
   ghostOpacity: number;
   liveOpacity: number;
@@ -13,12 +14,14 @@ const generated = (name: string) => `/wish-assets/generated/${name}-hero.png`;
 const productRegistry: Partial<Record<WishType, ProductAsset>> = {
   macbook: {
     src: generated("macbook"),
+    fallbackSrcs: ["/wish-assets/macbook/macbook-render.svg"],
     className: "h-[390px] w-[390px]",
     ghostOpacity: 0.55,
     liveOpacity: 1,
   },
   phone: {
     src: generated("phone"),
+    fallbackSrcs: ["/wish-assets/phone/phone-render.svg"],
     className: "h-[388px] w-[388px]",
     ghostOpacity: 0.55,
     liveOpacity: 1,
