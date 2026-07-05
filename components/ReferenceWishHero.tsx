@@ -15,6 +15,13 @@ type ReferenceWishHeroProps = {
   } | null;
 };
 
+type ProductAsset = {
+  src: string;
+  className: string;
+  ghostOpacity: number;
+  liveOpacity: number;
+};
+
 type ProductShard = {
   id: string;
   clipPath: string;
@@ -25,35 +32,61 @@ type ProductShard = {
   z: number;
 };
 
-type GenericWishType = Exclude<WishType, "macbook" | "phone">;
-
-const productAssets: Record<"macbook" | "phone", { src: string; className: string }> = {
+const productAssets: Record<WishType, ProductAsset> = {
   macbook: {
-    src: "/wish-assets/macbook/macbook-render.svg",
-    className: "h-[340px] w-[397px]",
+    src: "/wish-assets/generated/macbook-hero.webp",
+    className: "h-[390px] w-[390px]",
+    ghostOpacity: 0.16,
+    liveOpacity: 0.34,
   },
   phone: {
-    src: "/wish-assets/phone/phone-render.svg",
-    className: "h-[430px] w-[210px]",
+    src: "/wish-assets/generated/phone-hero.webp",
+    className: "h-[388px] w-[388px]",
+    ghostOpacity: 0.16,
+    liveOpacity: 0.34,
+  },
+  camera: {
+    src: "/wish-assets/generated/camera-hero.webp",
+    className: "h-[382px] w-[382px]",
+    ghostOpacity: 0.15,
+    liveOpacity: 0.33,
+  },
+  travel: {
+    src: "/wish-assets/generated/travel-hero.webp",
+    className: "h-[390px] w-[390px]",
+    ghostOpacity: 0.15,
+    liveOpacity: 0.34,
+  },
+  gift: {
+    src: "/wish-assets/generated/gift-hero.webp",
+    className: "h-[360px] w-[360px]",
+    ghostOpacity: 0.16,
+    liveOpacity: 0.36,
+  },
+  home: {
+    src: "/wish-assets/generated/home-hero.webp",
+    className: "h-[372px] w-[372px]",
+    ghostOpacity: 0.15,
+    liveOpacity: 0.33,
   },
 };
 
 const productShards: ProductShard[] = [
-  { id: "top-left", clipPath: "polygon(9% 8%, 35% 5%, 42% 25%, 22% 35%, 8% 25%)", x: -140, y: -100, rotate: -24, scale: 0.92, z: 26 },
-  { id: "top-screen", clipPath: "polygon(34% 6%, 62% 7%, 60% 28%, 42% 32%, 36% 22%)", x: -20, y: -136, rotate: 17, scale: 0.9, z: 30 },
-  { id: "top-right", clipPath: "polygon(62% 7%, 91% 10%, 87% 36%, 64% 30%)", x: 140, y: -104, rotate: 24, scale: 0.9, z: 25 },
-  { id: "left-screen", clipPath: "polygon(8% 24%, 28% 35%, 31% 58%, 9% 66%, 4% 45%)", x: -176, y: 18, rotate: -18, scale: 0.94, z: 29 },
-  { id: "screen-core", clipPath: "polygon(28% 31%, 58% 28%, 64% 55%, 39% 63%, 30% 50%)", x: 16, y: -52, rotate: 12, scale: 0.96, z: 36 },
-  { id: "screen-right", clipPath: "polygon(59% 30%, 88% 35%, 82% 63%, 63% 57%)", x: 164, y: 8, rotate: 19, scale: 0.92, z: 31 },
-  { id: "hinge-left", clipPath: "polygon(17% 61%, 40% 58%, 44% 73%, 22% 78%, 8% 70%)", x: -142, y: 112, rotate: 21, scale: 0.9, z: 33 },
-  { id: "keyboard-main", clipPath: "polygon(35% 59%, 66% 58%, 72% 78%, 41% 82%, 35% 72%)", x: 12, y: 128, rotate: -11, scale: 0.92, z: 38 },
-  { id: "keyboard-right", clipPath: "polygon(66% 59%, 93% 66%, 87% 84%, 70% 79%)", x: 146, y: 140, rotate: -19, scale: 0.9, z: 32 },
-  { id: "palm-left", clipPath: "polygon(10% 73%, 38% 80%, 36% 97%, 6% 91%)", x: -106, y: 206, rotate: -13, scale: 0.93, z: 34 },
-  { id: "trackpad", clipPath: "polygon(38% 78%, 62% 77%, 61% 95%, 37% 96%)", x: 0, y: 212, rotate: 10, scale: 0.94, z: 40 },
-  { id: "palm-right", clipPath: "polygon(61% 78%, 91% 83%, 97% 96%, 62% 96%)", x: 122, y: 202, rotate: 18, scale: 0.92, z: 35 },
-  { id: "tiny-left", clipPath: "polygon(0% 50%, 12% 55%, 11% 78%, 0% 73%)", x: -210, y: 92, rotate: 29, scale: 0.78, z: 41 },
-  { id: "tiny-right", clipPath: "polygon(88% 42%, 100% 50%, 97% 72%, 84% 63%)", x: 210, y: 86, rotate: -28, scale: 0.78, z: 42 },
-  { id: "bottom-edge", clipPath: "polygon(19% 93%, 82% 92%, 96% 100%, 8% 100%)", x: 0, y: 258, rotate: -7, scale: 0.88, z: 44 },
+  { id: "upper-left", clipPath: "polygon(9% 9%, 34% 5%, 42% 24%, 22% 35%, 7% 27%)", x: -154, y: -106, rotate: -25, scale: 0.9, z: 28 },
+  { id: "upper-core", clipPath: "polygon(33% 6%, 62% 6%, 61% 29%, 43% 34%, 36% 22%)", x: -18, y: -144, rotate: 16, scale: 0.9, z: 34 },
+  { id: "upper-right", clipPath: "polygon(62% 8%, 91% 10%, 87% 36%, 64% 31%)", x: 150, y: -108, rotate: 24, scale: 0.9, z: 29 },
+  { id: "left-mid", clipPath: "polygon(7% 26%, 30% 34%, 32% 58%, 9% 67%, 3% 46%)", x: -192, y: 18, rotate: -18, scale: 0.92, z: 30 },
+  { id: "center-large", clipPath: "polygon(28% 31%, 58% 28%, 66% 56%, 39% 65%, 30% 50%)", x: 16, y: -56, rotate: 12, scale: 0.95, z: 40 },
+  { id: "right-mid", clipPath: "polygon(59% 30%, 90% 35%, 83% 64%, 63% 58%)", x: 176, y: 8, rotate: 19, scale: 0.9, z: 32 },
+  { id: "left-lower", clipPath: "polygon(17% 61%, 40% 58%, 45% 74%, 22% 80%, 8% 71%)", x: -150, y: 122, rotate: 21, scale: 0.9, z: 35 },
+  { id: "center-lower", clipPath: "polygon(35% 58%, 66% 58%, 72% 78%, 41% 83%, 35% 72%)", x: 14, y: 138, rotate: -11, scale: 0.9, z: 42 },
+  { id: "right-lower", clipPath: "polygon(66% 59%, 94% 66%, 88% 85%, 70% 80%)", x: 156, y: 148, rotate: -19, scale: 0.9, z: 33 },
+  { id: "bottom-left", clipPath: "polygon(10% 73%, 38% 80%, 36% 97%, 6% 91%)", x: -112, y: 220, rotate: -13, scale: 0.92, z: 36 },
+  { id: "bottom-core", clipPath: "polygon(38% 78%, 62% 77%, 61% 95%, 37% 96%)", x: 0, y: 226, rotate: 10, scale: 0.92, z: 44 },
+  { id: "bottom-right", clipPath: "polygon(61% 78%, 91% 83%, 97% 96%, 62% 96%)", x: 130, y: 216, rotate: 18, scale: 0.9, z: 37 },
+  { id: "tiny-left", clipPath: "polygon(0% 50%, 12% 55%, 11% 78%, 0% 73%)", x: -220, y: 94, rotate: 29, scale: 0.78, z: 46 },
+  { id: "tiny-right", clipPath: "polygon(88% 42%, 100% 50%, 97% 72%, 84% 63%)", x: 220, y: 88, rotate: -28, scale: 0.78, z: 47 },
+  { id: "thin-bottom", clipPath: "polygon(19% 93%, 82% 92%, 96% 100%, 8% 100%)", x: 0, y: 272, rotate: -7, scale: 0.86, z: 48 },
 ];
 
 function Sparkles() {
@@ -82,39 +115,22 @@ function LightTrails() {
   );
 }
 
-function SimpleWishArt({ type }: { type: GenericWishType }) {
-  const config = {
-    camera: { emoji: "📷", label: "相机", bg: "from-violet-100 to-blue-100" },
-    travel: { emoji: "🧳", label: "旅行", bg: "from-teal-100 to-blue-100" },
-    gift: { emoji: "🎁", label: "礼物", bg: "from-orange-100 to-pink-100" },
-    home: { emoji: "🏠", label: "小家", bg: "from-emerald-100 to-lime-100" },
-  }[type];
-
-  return (
-    <div className={`relative flex h-[300px] w-[300px] items-center justify-center rounded-[42px] bg-gradient-to-br ${config.bg} shadow-[0_28px_50px_rgba(15,23,42,0.12)]`}>
-      <div className="absolute inset-6 rounded-[34px] bg-white/45 blur-sm" />
-      <div className="relative text-[92px] drop-shadow-[0_20px_28px_rgba(15,23,42,0.16)]">{config.emoji}</div>
-      <div className="absolute bottom-9 rounded-full bg-white/70 px-4 py-1 text-xs font-semibold text-stone-500 shadow-sm backdrop-blur">{config.label}心愿</div>
-    </div>
-  );
-}
-
 function AssetFragmentHero({
-  type,
+  wishType,
   progress,
   saveAnimation,
   warmUpNextPiece,
 }: {
-  type: "macbook" | "phone";
+  wishType: WishType;
   progress: number;
   saveAnimation: ReferenceWishHeroProps["saveAnimation"];
   warmUpNextPiece: boolean;
 }) {
-  const asset = productAssets[type];
+  const asset = productAssets[wishType];
   const isPristine = progress <= 0;
   const isComplete = progress >= 1;
-  const visualProgress = Math.min(1, progress * 2.15);
-  const visibleCount = isPristine || isComplete ? 0 : Math.max(6, Math.ceil(visualProgress * productShards.length));
+  const visualProgress = Math.min(1, progress * 2.05);
+  const visibleCount = isPristine || isComplete ? 0 : Math.max(5, Math.ceil(visualProgress * productShards.length));
   const shownShards = productShards.slice(0, visibleCount);
 
   return (
@@ -123,18 +139,18 @@ function AssetFragmentHero({
         src={asset.src}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full select-none"
+        className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain drop-shadow-[0_28px_38px_rgba(15,23,42,0.20)]"
         initial={false}
         animate={saveAnimation ? { scale: [1, 1.025, 1], rotate: [0, -0.6, 0] } : { scale: 1, rotate: 0 }}
         transition={{ duration: 0.58, ease: "easeOut" }}
         style={{
-          opacity: isComplete ? 1 : isPristine ? 0.16 : 0.32,
-          filter: isComplete ? "none" : isPristine ? "grayscale(0.75) saturate(0.6)" : "grayscale(0.12)",
+          opacity: isComplete ? 1 : isPristine ? asset.ghostOpacity : asset.liveOpacity,
+          filter: isComplete ? "none" : isPristine ? "grayscale(0.74) saturate(0.68)" : "grayscale(0.08)",
         }}
       />
 
       {shownShards.map((shard, index) => {
-        const finalPull = Math.min(0.78, visualProgress * 0.74);
+        const finalPull = Math.min(0.8, visualProgress * 0.76);
         const targetX = shard.x * (1 - finalPull);
         const targetY = shard.y * (1 - finalPull);
         const targetRotate = shard.rotate * (1 - finalPull);
@@ -142,7 +158,7 @@ function AssetFragmentHero({
 
         return (
           <motion.div
-            key={shard.id}
+            key={`${wishType}-${shard.id}`}
             className="absolute inset-0"
             style={{ zIndex: shard.z, transformOrigin: "center" }}
             initial={newest ? { x: shard.x, y: shard.y, rotate: shard.rotate, scale: shard.scale, opacity: 0 } : false}
@@ -153,7 +169,7 @@ function AssetFragmentHero({
               className="absolute inset-0"
               style={{
                 clipPath: shard.clipPath,
-                background: "linear-gradient(145deg, rgba(71,85,105,0.98), rgba(248,250,252,0.92) 42%, rgba(15,23,42,0.98))",
+                background: "linear-gradient(145deg, rgba(71,85,105,0.96), rgba(248,250,252,0.9) 42%, rgba(15,23,42,0.96))",
                 transform: "translate(7px, 8px)",
                 filter: "drop-shadow(0 20px 28px rgba(15,23,42,0.24))",
               }}
@@ -164,6 +180,8 @@ function AssetFragmentHero({
                 clipPath: shard.clipPath,
                 backgroundImage: `url(${asset.src})`,
                 backgroundSize: "100% 100%",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
                 filter: "drop-shadow(0 16px 24px rgba(15,23,42,0.22))",
               }}
             />
@@ -201,16 +219,6 @@ function AssetFragmentHero({
   );
 }
 
-function GenericHero({ type, progress, saveAnimation }: { type: GenericWishType; progress: number; saveAnimation: ReferenceWishHeroProps["saveAnimation"] }) {
-  return (
-    <div className="absolute left-1/2 top-[51%] -translate-x-1/2 -translate-y-1/2">
-      <motion.div initial={false} animate={saveAnimation ? { scale: [1, 1.035, 1] } : { scale: 1 }} transition={{ duration: 0.58, ease: "easeOut" }} style={{ opacity: progress <= 0 ? 0.55 : 0.78 + progress * 0.2 }}>
-        <SimpleWishArt type={type} />
-      </motion.div>
-    </div>
-  );
-}
-
 export default function ReferenceWishHero({ wishType, currentAmount, targetAmount, warmUpNextPiece = false, saveAnimation = null }: ReferenceWishHeroProps) {
   const progress = Math.min(currentAmount / targetAmount, 1);
   const isComplete = progress >= 1;
@@ -223,11 +231,7 @@ export default function ReferenceWishHero({ wishType, currentAmount, targetAmoun
       <Sparkles />
       <LightTrails />
 
-      {wishType === "phone" || wishType === "macbook" ? (
-        <AssetFragmentHero type={wishType} progress={progress} saveAnimation={saveAnimation} warmUpNextPiece={warmUpNextPiece} />
-      ) : (
-        <GenericHero type={wishType} progress={progress} saveAnimation={saveAnimation} />
-      )}
+      <AssetFragmentHero wishType={wishType} progress={progress} saveAnimation={saveAnimation} warmUpNextPiece={warmUpNextPiece} />
 
       {saveAnimation && (
         <div key={saveAnimation.key} className="pointer-events-none absolute inset-0 z-40">
