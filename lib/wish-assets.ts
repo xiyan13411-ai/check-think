@@ -2,65 +2,54 @@ import type { WishType } from "@/lib/wish-presets";
 
 export type ProductAsset = {
   src: string;
+  completeSrc?: string;
   className: string;
   ghostOpacity: number;
   liveOpacity: number;
 };
 
+const version = "png3";
+const generated = (name: string) => `/wish-assets/generated/${name}-hero.png?v=${version}`;
+
 const productRegistry: Partial<Record<WishType, ProductAsset>> = {
   macbook: {
-    src: "/wish-assets/generated/macbook-hero.png?v=png2",
+    src: generated("macbook"),
     className: "h-[390px] w-[390px]",
     ghostOpacity: 0.18,
     liveOpacity: 0.9,
   },
   phone: {
-    src: "/wish-assets/generated/phone-hero.png?v=png2",
+    src: generated("phone"),
     className: "h-[388px] w-[388px]",
     ghostOpacity: 0.18,
     liveOpacity: 0.9,
   },
   camera: {
-<<<<<<< HEAD
-    src: "/wish-assets/generated/camera-hero.png",
-=======
-    src: "/wish-assets/generated/camera-hero.png?v=png2",
+    src: generated("camera"),
     className: "h-[382px] w-[382px]",
     ghostOpacity: 0.16,
     liveOpacity: 0.86,
   },
   travel: {
-<<<<<<< HEAD
-    src: "/wish-assets/generated/travel-hero.png",
-=======
-    src: "/wish-assets/generated/travel-hero.png?v=png2",
+    src: generated("travel"),
     className: "h-[390px] w-[390px]",
     ghostOpacity: 0.16,
     liveOpacity: 0.86,
   },
   gift: {
-<<<<<<< HEAD
-    src: "/wish-assets/generated/gift-hero.png",
-=======
-    src: "/wish-assets/generated/gift-hero.png?v=png2",
+    src: generated("gift"),
     className: "h-[360px] w-[360px]",
     ghostOpacity: 0.16,
     liveOpacity: 0.88,
   },
   home: {
-<<<<<<< HEAD
-    src: "/wish-assets/generated/home-hero.png",
-=======
-    src: "/wish-assets/generated/home-hero.png?v=png2",
+    src: generated("home"),
     className: "h-[372px] w-[372px]",
     ghostOpacity: 0.16,
     liveOpacity: 0.86,
   },
   earphone: {
-<<<<<<< HEAD
-    src: "/wish-assets/generated/earphone-hero.png",
-=======
-    src: "/wish-assets/generated/earphone-hero.png?v=png2",
+    src: generated("earphone"),
     className: "h-[370px] w-[370px]",
     ghostOpacity: 0.16,
     liveOpacity: 0.86,
@@ -70,5 +59,3 @@ const productRegistry: Partial<Record<WishType, ProductAsset>> = {
 export function getWishAsset(type: WishType): ProductAsset {
   return productRegistry[type] ?? productRegistry.phone!;
 }
-
-
