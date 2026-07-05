@@ -27,38 +27,38 @@ type Shard = {
 };
 
 const floatingShards: Shard[] = [
-  { left: "4%", top: "52%", width: 54, height: 98, rotate: -27, delay: 0, clipPath: "polygon(34% 0%, 100% 18%, 72% 100%, 0% 72%)", dark: true },
-  { left: "17%", top: "67%", width: 70, height: 76, rotate: 24, delay: 0.18, clipPath: "polygon(18% 0%, 100% 34%, 78% 92%, 0% 100%, 26% 48%)" },
-  { left: "73%", top: "20%", width: 56, height: 78, rotate: 18, delay: 0.1, clipPath: "polygon(0% 12%, 82% 0%, 100% 74%, 28% 100%)" },
-  { left: "82%", top: "56%", width: 58, height: 74, rotate: -17, delay: 0.26, clipPath: "polygon(28% 0%, 100% 34%, 74% 100%, 0% 78%)", dark: true },
-  { left: "9%", top: "27%", width: 40, height: 60, rotate: 30, delay: 0.36, clipPath: "polygon(0% 20%, 72% 0%, 100% 82%, 24% 100%)" },
-  { left: "59%", top: "73%", width: 48, height: 64, rotate: -9, delay: 0.44, clipPath: "polygon(18% 0%, 100% 26%, 80% 100%, 0% 74%)" },
-  { left: "87%", top: "33%", width: 34, height: 50, rotate: 32, delay: 0.52, clipPath: "polygon(30% 0%, 100% 42%, 74% 100%, 0% 62%)" },
+  { left: "5%", top: "53%", width: 58, height: 100, rotate: -25, delay: 0, clipPath: "polygon(34% 0%, 100% 18%, 72% 100%, 0% 72%)", dark: true },
+  { left: "17%", top: "68%", width: 76, height: 72, rotate: 23, delay: 0.18, clipPath: "polygon(18% 0%, 100% 34%, 78% 92%, 0% 100%, 26% 48%)" },
+  { left: "72%", top: "20%", width: 60, height: 80, rotate: 18, delay: 0.1, clipPath: "polygon(0% 12%, 82% 0%, 100% 74%, 28% 100%)" },
+  { left: "82%", top: "56%", width: 62, height: 78, rotate: -17, delay: 0.26, clipPath: "polygon(28% 0%, 100% 34%, 74% 100%, 0% 78%)", dark: true },
+  { left: "10%", top: "29%", width: 42, height: 62, rotate: 30, delay: 0.36, clipPath: "polygon(0% 20%, 72% 0%, 100% 82%, 24% 100%)" },
+  { left: "58%", top: "73%", width: 52, height: 68, rotate: -9, delay: 0.44, clipPath: "polygon(18% 0%, 100% 26%, 80% 100%, 0% 74%)" },
+  { left: "87%", top: "34%", width: 36, height: 52, rotate: 32, delay: 0.52, clipPath: "polygon(30% 0%, 100% 42%, 74% 100%, 0% 62%)" },
 ];
 
 const attachedShards: Shard[] = [
-  { left: "44%", top: "24%", width: 72, height: 70, rotate: 14, delay: 0.02, clipPath: "polygon(18% 0%, 100% 16%, 82% 100%, 0% 72%)" },
-  { left: "53%", top: "38%", width: 60, height: 80, rotate: -10, delay: 0.08, clipPath: "polygon(0% 24%, 86% 0%, 100% 76%, 26% 100%)" },
-  { left: "40%", top: "54%", width: 76, height: 66, rotate: 9, delay: 0.12, clipPath: "polygon(16% 0%, 100% 30%, 72% 100%, 0% 78%)" },
-  { left: "30%", top: "63%", width: 66, height: 52, rotate: -14, delay: 0.16, clipPath: "polygon(0% 18%, 86% 0%, 100% 70%, 22% 100%)" },
-  { left: "61%", top: "62%", width: 56, height: 74, rotate: 18, delay: 0.2, clipPath: "polygon(20% 0%, 100% 32%, 76% 100%, 0% 68%)" },
+  { left: "44%", top: "24%", width: 74, height: 72, rotate: 14, delay: 0.02, clipPath: "polygon(18% 0%, 100% 16%, 82% 100%, 0% 72%)" },
+  { left: "53%", top: "38%", width: 62, height: 82, rotate: -10, delay: 0.08, clipPath: "polygon(0% 24%, 86% 0%, 100% 76%, 26% 100%)" },
+  { left: "40%", top: "54%", width: 78, height: 68, rotate: 9, delay: 0.12, clipPath: "polygon(16% 0%, 100% 30%, 72% 100%, 0% 78%)" },
+  { left: "30%", top: "63%", width: 68, height: 54, rotate: -14, delay: 0.16, clipPath: "polygon(0% 18%, 86% 0%, 100% 70%, 22% 100%)" },
+  { left: "61%", top: "62%", width: 58, height: 76, rotate: 18, delay: 0.2, clipPath: "polygon(20% 0%, 100% 32%, 76% 100%, 0% 68%)" },
 ];
 
-const sideMaterial = "linear-gradient(145deg, rgba(100,116,139,0.98) 0%, rgba(248,250,252,0.88) 40%, rgba(30,41,59,0.96) 100%)";
+const sideMaterial = "linear-gradient(145deg, rgba(71,85,105,0.98) 0%, rgba(248,250,252,0.9) 40%, rgba(15,23,42,0.98) 100%)";
 const faceMaterial = "linear-gradient(135deg, #ffffff 0%, #eef2f7 42%, #cbd5e1 100%)";
-const darkMaterial = "linear-gradient(135deg, rgba(219,234,254,0.16), rgba(29,78,216,0.50) 48%, rgba(2,6,23,0.62))";
-const shineMaterial = "linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.16) 36%, transparent 62%)";
+const darkMaterial = "linear-gradient(135deg, rgba(219,234,254,0.16), rgba(29,78,216,0.52) 48%, rgba(2,6,23,0.66))";
+const shineMaterial = "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.16) 36%, transparent 62%)";
 
 function Sparkles() {
   return (
     <>
-      {[0, 1, 2, 3, 4, 5].map((i) => (
+      {[0, 1, 2, 3, 4, 5, 6].map((i) => (
         <motion.span
           key={i}
-          className="pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.95)]"
-          style={{ left: `${18 + i * 13}%`, top: `${22 + (i % 3) * 18}%` }}
-          animate={{ opacity: [0.15, 0.9, 0.15], scale: [0.6, 1.4, 0.6] }}
-          transition={{ duration: 2.4 + i * 0.2, repeat: Infinity, delay: i * 0.22, ease: "easeInOut" }}
+          className="pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.96)]"
+          style={{ left: `${16 + i * 12}%`, top: `${23 + (i % 3) * 17}%` }}
+          animate={{ opacity: [0.12, 0.95, 0.12], scale: [0.55, 1.55, 0.55] }}
+          transition={{ duration: 2.2 + i * 0.18, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
         />
       ))}
     </>
@@ -67,56 +67,61 @@ function Sparkles() {
 
 function MacbookArt() {
   return (
-    <svg viewBox="0 0 330 310" className="h-full w-full drop-shadow-[0_28px_38px_rgba(15,23,42,0.22)]" fill="none">
+    <svg viewBox="0 0 360 330" className="h-full w-full drop-shadow-[0_30px_40px_rgba(15,23,42,0.22)]" fill="none">
       <defs>
-        <linearGradient id="macScreenXhs" x1="76" y1="42" x2="260" y2="205" gradientUnits="userSpaceOnUse">
+        <linearGradient id="macScreenV12" x1="78" y1="48" x2="286" y2="216" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#020617" />
-          <stop offset="0.24" stopColor="#172554" />
-          <stop offset="0.48" stopColor="#7c3aed" />
-          <stop offset="0.72" stopColor="#ec4899" />
+          <stop offset="0.18" stopColor="#172554" />
+          <stop offset="0.43" stopColor="#7c3aed" />
+          <stop offset="0.7" stopColor="#ec4899" />
           <stop offset="1" stopColor="#22d3ee" />
         </linearGradient>
-        <linearGradient id="macBodyXhs" x1="42" y1="204" x2="304" y2="280" gradientUnits="userSpaceOnUse">
+        <linearGradient id="macMetalV12" x1="30" y1="210" x2="330" y2="292" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#f8fafc" />
-          <stop offset="0.44" stopColor="#d1d5db" />
+          <stop offset="0.42" stopColor="#d1d5db" />
+          <stop offset="0.72" stopColor="#f1f5f9" />
           <stop offset="1" stopColor="#94a3b8" />
         </linearGradient>
-        <linearGradient id="macLidEdge" x1="58" y1="42" x2="268" y2="208" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#64748b" />
+        <linearGradient id="macEdgeV12" x1="60" y1="42" x2="300" y2="226" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#475569" />
           <stop offset="0.35" stopColor="#f8fafc" />
-          <stop offset="1" stopColor="#334155" />
+          <stop offset="1" stopColor="#1e293b" />
         </linearGradient>
       </defs>
-      <path d="M80 39 H252 C265 39 275 50 275 64 V200 C275 214 265 224 251 224 H78 C64 224 55 214 55 200 V64 C55 50 66 39 80 39Z" fill="url(#macLidEdge)" />
-      <path d="M83 49 H248 C257 49 264 56 264 66 V191 C264 201 257 208 247 208 H83 C73 208 66 201 66 191 V66 C66 56 73 49 83 49Z" fill="#030712" />
-      <path d="M91 58 H239 C247 58 253 64 253 72 V184 C253 192 247 198 239 198 H91 C83 198 77 192 77 184 V72 C77 64 83 58 91 58Z" fill="url(#macScreenXhs)" />
-      <path d="M88 187 C128 110 170 78 240 62 C210 95 209 151 250 198 H90Z" fill="#ffffff" opacity="0.20" />
-      <path d="M104 61 C153 72 183 111 205 196" stroke="#ffffff" strokeWidth="15" strokeLinecap="round" opacity="0.16" />
-      <path d="M43 213 L284 213 L316 260 C320 266 315 273 304 273 H25 C14 273 10 266 14 260 L43 213Z" fill="url(#macBodyXhs)" />
-      <path d="M60 224 H268 L284 250 H43Z" fill="#e5e7eb" opacity="0.98" />
+      <ellipse cx="178" cy="284" rx="124" ry="18" fill="#020617" opacity="0.12" />
+      <path d="M86 38 H274 C290 38 302 50 302 66 V204 C302 220 290 232 274 232 H84 C68 232 58 220 58 204 V66 C58 50 70 38 86 38Z" fill="url(#macEdgeV12)" />
+      <path d="M91 50 H268 C279 50 288 59 288 71 V193 C288 205 279 214 267 214 H91 C79 214 70 205 70 193 V71 C70 59 79 50 91 50Z" fill="#030712" />
+      <path d="M99 60 H260 C270 60 277 67 277 77 V185 C277 195 270 202 260 202 H99 C89 202 82 195 82 185 V77 C82 67 89 60 99 60Z" fill="url(#macScreenV12)" />
+      <path d="M97 190 C136 111 185 76 260 64 C230 101 229 154 281 202 H98Z" fill="#ffffff" opacity="0.19" />
+      <path d="M110 65 C166 75 203 118 228 199" stroke="#ffffff" strokeWidth="17" strokeLinecap="round" opacity="0.14" />
+      <path d="M41 217 L300 217 L336 266 C341 273 335 281 322 281 H31 C18 281 13 273 18 266 L41 217Z" fill="url(#macMetalV12)" />
+      <path d="M60 229 H283 L300 256 H43Z" fill="#e5e7eb" opacity="0.98" />
       {Array.from({ length: 8 }).map((_, row) =>
-        Array.from({ length: 13 }).map((__, col) => (
-          <rect key={`${row}-${col}`} x={65 + col * 15} y={224 + row * 5.6} width="10.5" height="3.3" rx="1" fill="#1f2937" opacity="0.78" />
+        Array.from({ length: 14 }).map((__, col) => (
+          <rect key={`${row}-${col}`} x={65 + col * 15} y={229 + row * 5.7} width="10.4" height="3.4" rx="1" fill="#1f2937" opacity="0.78" />
         )),
       )}
-      <rect x="132" y="238" width="65" height="19" rx="5" fill="#cbd5e1" stroke="#f8fafc" />
-      <path d="M18 260 H312 C305 273 289 280 264 280 H65 C39 280 25 273 18 260Z" fill="#64748b" opacity="0.34" />
-      <path d="M66 221 C122 205 208 208 271 229" stroke="#ffffff" strokeWidth="9" strokeLinecap="round" opacity="0.38" />
+      <rect x="143" y="244" width="68" height="20" rx="5" fill="#cbd5e1" stroke="#f8fafc" />
+      <path d="M21 266 H333 C325 280 309 287 282 287 H72 C45 287 29 280 21 266Z" fill="#64748b" opacity="0.34" />
+      <path d="M68 226 C130 208 226 212 293 235" stroke="#ffffff" strokeWidth="10" strokeLinecap="round" opacity="0.38" />
     </svg>
   );
 }
 
 function PhoneArt() {
   return (
-    <svg viewBox="0 0 230 350" className="h-full w-full drop-shadow-[0_26px_36px_rgba(15,23,42,0.22)]" fill="none">
-      <defs><linearGradient id="phoneBodyXhs" x1="45" y1="16" x2="185" y2="330" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#ffffff"/><stop offset="0.48" stopColor="#e5e7eb"/><stop offset="1" stopColor="#94a3b8"/></linearGradient></defs>
-      <rect x="47" y="14" width="136" height="318" rx="36" fill="#64748b" />
-      <rect x="52" y="19" width="126" height="308" rx="32" fill="url(#phoneBodyXhs)" />
-      <path d="M136 29 C164 88 162 239 178 317 L178 19 H128Z" fill="#1d4ed8" opacity="0.16" />
-      <rect x="68" y="40" width="64" height="82" rx="17" fill="#f8fafc" stroke="#cbd5e1" />
-      {[[86,60,13], [114,60,11], [98,91,11]].map(([cx, cy, r]) => (<g key={`${cx}-${cy}`}><circle cx={cx} cy={cy} r={r} fill="#cbd5e1"/><circle cx={cx} cy={cy} r={r - 3} fill="#020617"/><circle cx={cx - 3} cy={cy - 4} r="2.4" fill="#ffffff" opacity="0.76"/></g>))}
-      <circle cx="119" cy="92" r="4" fill="#fbbf24" opacity="0.72" />
-      <path d="M73 126 C118 157 128 250 150 312" stroke="#ffffff" strokeWidth="17" strokeLinecap="round" opacity="0.28" />
+    <svg viewBox="0 0 250 360" className="h-full w-full drop-shadow-[0_28px_40px_rgba(15,23,42,0.24)]" fill="none">
+      <defs>
+        <linearGradient id="phoneBodyV12" x1="50" y1="18" x2="198" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#ffffff"/><stop offset="0.5" stopColor="#e5e7eb"/><stop offset="1" stopColor="#94a3b8"/></linearGradient>
+        <linearGradient id="phoneBlueV12" x1="152" y1="30" x2="205" y2="330" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#bfdbfe" stopOpacity="0"/><stop offset="0.52" stopColor="#1d4ed8" stopOpacity="0.32"/><stop offset="1" stopColor="#020617" stopOpacity="0.38"/></linearGradient>
+      </defs>
+      <rect x="52" y="15" width="146" height="326" rx="38" fill="#64748b" />
+      <rect x="57" y="20" width="136" height="316" rx="34" fill="url(#phoneBodyV12)" />
+      <path d="M149 31 C178 94 176 245 193 326 L193 20 H139Z" fill="url(#phoneBlueV12)" />
+      <rect x="74" y="42" width="70" height="88" rx="18" fill="#f8fafc" stroke="#cbd5e1" />
+      {[[94,64,14], [124,64,12], [106,97,12]].map(([cx, cy, r]) => (<g key={`${cx}-${cy}`}><circle cx={cx} cy={cy} r={r} fill="#cbd5e1"/><circle cx={cx} cy={cy} r={r - 3} fill="#020617"/><circle cx={cx - 3} cy={cy - 4} r="2.5" fill="#ffffff" opacity="0.78"/></g>))}
+      <circle cx="129" cy="98" r="4" fill="#fbbf24" opacity="0.72" />
+      <path d="M78 132 C128 164 141 258 166 324" stroke="#ffffff" strokeWidth="18" strokeLinecap="round" opacity="0.28" />
     </svg>
   );
 }
@@ -171,8 +176,8 @@ function WishObjectArt({ type }: { type: WishType }) {
 
 function FloatingShard({ shard, progress, index }: { shard: Shard; progress: number; index: number }) {
   return (
-    <motion.div className="pointer-events-none absolute" style={{ left: shard.left, top: shard.top, width: shard.width, height: shard.height, transform: `rotate(${shard.rotate}deg)` }} animate={{ y: [0, -11, 0], opacity: [0.62, 0.98, 0.62] }} transition={{ duration: 4.4, repeat: Infinity, delay: shard.delay, ease: "easeInOut" }}>
-      <div className="absolute inset-0 shadow-[0_18px_34px_rgba(15,23,42,0.16)]" style={{ clipPath: shard.clipPath, background: sideMaterial, transform: "translate(6px, 7px)" }} />
+    <motion.div className="pointer-events-none absolute" style={{ left: shard.left, top: shard.top, width: shard.width, height: shard.height, transform: `rotate(${shard.rotate}deg)` }} animate={{ y: [0, -12, 0], opacity: [0.62, 0.98, 0.62] }} transition={{ duration: 4.4, repeat: Infinity, delay: shard.delay, ease: "easeInOut" }}>
+      <div className="absolute inset-0 shadow-[0_18px_34px_rgba(15,23,42,0.16)]" style={{ clipPath: shard.clipPath, background: sideMaterial, transform: "translate(7px, 8px)" }} />
       <div className="absolute inset-0 border border-white/70 shadow-[0_14px_28px_rgba(15,23,42,0.11)]" style={{ clipPath: shard.clipPath, background: faceMaterial }} />
       {shard.dark && <div className="absolute inset-0" style={{ clipPath: shard.clipPath, background: darkMaterial, mixBlendMode: "multiply" }} />}
       <div className="absolute inset-0" style={{ clipPath: shard.clipPath, background: shineMaterial, mixBlendMode: "screen" }} />
@@ -184,6 +189,7 @@ function FloatingShard({ shard, progress, index }: { shard: Shard; progress: num
 export default function ReferenceWishHero({ wishType, currentAmount, targetAmount, warmUpNextPiece = false, saveAnimation = null }: ReferenceWishHeroProps) {
   const progress = Math.min(currentAmount / targetAmount, 1);
   const isComplete = progress >= 1;
+  const isPristine = currentAmount <= 0;
   const unlockedAttachedCount = Math.min(attachedShards.length, Math.floor(progress * attachedShards.length * 1.6));
 
   return (
@@ -214,9 +220,15 @@ export default function ReferenceWishHero({ wishType, currentAmount, targetAmoun
       )}
 
       <div className="absolute left-1/2 top-[50%] h-[304px] w-[322px] -translate-x-1/2 -translate-y-1/2">
-        <motion.div className="absolute inset-0" animate={saveAnimation ? { scale: [1, 1.035, 1], rotate: [0, -0.8, 0] } : { scale: 1, rotate: 0 }} transition={{ duration: 0.58, ease: "easeOut" }} style={{ opacity: isComplete ? 1 : 0.58 + progress * 0.26 }}>
+        <motion.div className="absolute inset-0" initial={false} animate={saveAnimation ? { scale: [1, 1.035, 1], rotate: [0, -0.8, 0] } : { scale: 1, rotate: 0 }} transition={{ duration: 0.58, ease: "easeOut" }} style={{ opacity: isComplete ? 1 : isPristine ? 0.46 : 0.6 + progress * 0.25, filter: isPristine ? "grayscale(0.55) saturate(0.72)" : "none" }}>
           <WishObjectArt type={wishType} />
         </motion.div>
+
+        {isPristine && (
+          <motion.div className="absolute left-1/2 top-[48%] z-30 -translate-x-1/2 rounded-full bg-white/70 px-4 py-2 text-xs font-semibold text-stone-400 shadow-sm backdrop-blur" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+            存第一笔，开始拼回心愿
+          </motion.div>
+        )}
 
         {!isComplete && attachedShards.slice(0, unlockedAttachedCount).map((shard, index) => {
           const isNewest = saveAnimation?.mode === "unlock" && index >= Math.max(0, unlockedAttachedCount - 2);
