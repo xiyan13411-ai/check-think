@@ -1,56 +1,111 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 420" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 420" fill="none">
   <defs>
-    <filter id="shadowBlur" x="-10%" y="-10%" width="130%" height="130%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
-      <feOffset dx="0" dy="6" />
-      <feComponentTransfer><feFuncA type="linear" slope="0.15" /></feComponentTransfer>
-      <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+    <filter id="softShadow" x="-35%" y="-20%" width="170%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#0f172a" flood-opacity="0.20"/>
     </filter>
-    <linearGradient id="bodyGrad" x1="0" y1="0" x2="0.4" y2="1">
-      <stop offset="0%" stop-color="#f8fafc" />
-      <stop offset="35%" stop-color="#f1f5f9" />
-      <stop offset="100%" stop-color="#e2e8f0" />
+    <filter id="lensShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#020617" flood-opacity="0.45"/>
+    </filter>
+    <filter id="hairGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="0.45"/>
+    </filter>
+
+    <linearGradient id="rim" x1="18" y1="8" x2="185" y2="410" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.18" stop-color="#e2e8f0"/>
+      <stop offset="0.45" stop-color="#94a3b8"/>
+      <stop offset="0.62" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#64748b"/>
     </linearGradient>
-    <linearGradient id="reflect" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f172a" stop-opacity="0.35" />
-      <stop offset="20%" stop-color="#0f172a" stop-opacity="0.10" />
-      <stop offset="60%" stop-color="#0f172a" stop-opacity="0" />
-      <stop offset="85%" stop-color="#0f172a" stop-opacity="0.12" />
-      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.28" />
+    <linearGradient id="body" x1="26" y1="20" x2="170" y2="394" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.18" stop-color="#f8fafc"/>
+      <stop offset="0.52" stop-color="#e5e7eb"/>
+      <stop offset="0.75" stop-color="#f9fafb"/>
+      <stop offset="1" stop-color="#cbd5e1"/>
     </linearGradient>
-    <radialGradient id="lensGrad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#1c1917" />
-      <stop offset="70%" stop-color="#292524" />
-      <stop offset="100%" stop-color="#44403c" />
+    <linearGradient id="bodyShade" x1="20" y1="20" x2="182" y2="390" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.70"/>
+      <stop offset="0.36" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.72" stop-color="#0f172a" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#0f172a" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="blueReflect" x1="74" y1="90" x2="173" y2="344" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#eff6ff" stop-opacity="0"/>
+      <stop offset="0.33" stop-color="#1d4ed8" stop-opacity="0.12"/>
+      <stop offset="0.58" stop-color="#0f172a" stop-opacity="0.36"/>
+      <stop offset="0.8" stop-color="#2563eb" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#020617" stop-opacity="0.30"/>
+    </linearGradient>
+    <linearGradient id="specular" x1="40" y1="20" x2="150" y2="390" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.26" stop-color="#ffffff" stop-opacity="0.48"/>
+      <stop offset="0.34" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="0.58" stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="0.66" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="lens" cx="44%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#1e293b"/>
+      <stop offset="0.36" stop-color="#020617"/>
+      <stop offset="0.68" stop-color="#111827"/>
+      <stop offset="1" stop-color="#475569"/>
     </radialGradient>
-    <linearGradient id="edgeGlow" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="rgba(255,255,255,0)" />
-      <stop offset="50%" stop-color="rgba(255,255,255,0.5)" />
-      <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+    <linearGradient id="lensRing" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.32" stop-color="#cbd5e1"/>
+      <stop offset="0.74" stop-color="#64748b"/>
+      <stop offset="1" stop-color="#f8fafc"/>
     </linearGradient>
+    <clipPath id="phoneClip">
+      <rect x="15" y="14" width="170" height="392" rx="36"/>
+    </clipPath>
   </defs>
-  <rect x="15" y="18" width="170" height="390" rx="35" fill="rgba(15,23,42,0.08)" />
-  <rect x="13" y="13" width="174" height="394" rx="37" fill="#1e293b" />
-  <rect x="15" y="15" width="170" height="390" rx="35" fill="url(#bodyGrad)" stroke="#cbd5e1" stroke-width="0.8" />
-  <rect x="15" y="15" width="170" height="390" rx="35" fill="url(#reflect)" />
-  <rect x="15" y="15" width="170" height="390" rx="35" fill="url(#edgeGlow)" opacity="0.3" />
-  <rect x="30" y="38" width="65" height="85" rx="14" fill="#0f172a" stroke="#334155" stroke-width="0.8" />
-  <rect x="32" y="40" width="61" height="81" rx="12" fill="#1e293b" />
-  <circle cx="45" cy="55" r="12" fill="url(#lensGrad)" />
-  <circle cx="45" cy="55" r="9" fill="#0f172a" />
-  <circle cx="42" cy="52" r="2.5" fill="rgba(255,255,255,0.12)" />
-  <circle cx="75" cy="55" r="9" fill="url(#lensGrad)" />
-  <circle cx="75" cy="55" r="6.5" fill="#0f172a" />
-  <circle cx="73" cy="53" r="1.8" fill="rgba(255,255,255,0.12)" />
-  <circle cx="60" cy="72" r="6" fill="url(#lensGrad)" />
-  <circle cx="60" cy="72" r="4" fill="#0f172a" />
-  <circle cx="59" cy="71" r="1.2" fill="rgba(255,255,255,0.1)" />
-  <rect x="82" y="102" width="5" height="5" rx="1.5" fill="#94a3b8" />
-  <rect x="35" y="105" width="6" height="6" rx="2" fill="#334155" />
-  <rect x="15" y="15" width="170" height="390" rx="35" fill="none" stroke="#94a3b8" stroke-width="1" />
-  <rect x="16.5" y="16.5" width="167" height="387" rx="33.5" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="0.5" />
-  <path d="M25,17 Q100,14 175,17" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none" />
-  <path d="M17,25 Q16,210 17,395" stroke="rgba(255,255,255,0.15)" stroke-width="0.8" fill="none" />
-  <path d="M30,30 Q100,20 170,30" stroke="rgba(255,255,255,0.06)" stroke-width="18" fill="none" />
-  <path d="M25,380 Q100,395 175,380" stroke="rgba(15,23,42,0.05)" stroke-width="14" fill="none" />
+
+  <ellipse cx="103" cy="399" rx="66" ry="13" fill="#020617" opacity="0.12" filter="url(#hairGlow)"/>
+
+  <g filter="url(#softShadow)">
+    <rect x="11.5" y="10" width="177" height="399" rx="39" fill="url(#rim)"/>
+    <rect x="15" y="14" width="170" height="392" rx="36" fill="url(#body)"/>
+    <rect x="15" y="14" width="170" height="392" rx="36" fill="url(#bodyShade)"/>
+
+    <g clip-path="url(#phoneClip)">
+      <path d="M130 30 C160 88 168 170 156 245 C147 300 158 356 185 402 L185 14 L128 14 Z" fill="url(#blueReflect)"/>
+      <path d="M36 24 C82 52 116 101 134 171 C152 241 137 312 158 390" stroke="url(#specular)" stroke-width="24" stroke-linecap="round" opacity="0.68"/>
+      <path d="M22 102 C58 92 94 101 132 130" stroke="#ffffff" stroke-opacity="0.38" stroke-width="1.4"/>
+      <path d="M52 356 C92 374 135 370 176 344" stroke="#0f172a" stroke-opacity="0.08" stroke-width="12" stroke-linecap="round"/>
+      <path d="M126 160 L152 132 L145 192 L167 229 L132 248" stroke="#334155" stroke-opacity="0.16" stroke-width="1" fill="none"/>
+      <path d="M54 146 L82 179 L66 240 L104 268" stroke="#ffffff" stroke-opacity="0.26" stroke-width="1" fill="none"/>
+    </g>
+
+    <rect x="15" y="14" width="170" height="392" rx="36" fill="none" stroke="#f8fafc" stroke-opacity="0.65" stroke-width="1"/>
+    <rect x="12" y="11" width="176" height="398" rx="39" fill="none" stroke="#475569" stroke-opacity="0.35" stroke-width="1"/>
+
+    <g filter="url(#lensShadow)">
+      <rect x="28" y="35" width="72" height="92" rx="18" fill="#e2e8f0" stroke="#ffffff" stroke-opacity="0.78" stroke-width="1.2"/>
+      <rect x="31" y="38" width="66" height="86" rx="15" fill="#f8fafc" opacity="0.78"/>
+      <path d="M35 42 C58 36 78 37 94 47" stroke="#ffffff" stroke-opacity="0.82" stroke-width="2.4" stroke-linecap="round"/>
+
+      <circle cx="48" cy="58" r="14.5" fill="url(#lensRing)"/>
+      <circle cx="48" cy="58" r="10.8" fill="url(#lens)"/>
+      <circle cx="44" cy="54" r="2.9" fill="#ffffff" opacity="0.72"/>
+      <circle cx="52" cy="63" r="4.6" fill="#1d4ed8" opacity="0.22"/>
+
+      <circle cx="78" cy="58" r="12.8" fill="url(#lensRing)"/>
+      <circle cx="78" cy="58" r="9.4" fill="url(#lens)"/>
+      <circle cx="75" cy="55" r="2.3" fill="#ffffff" opacity="0.66"/>
+
+      <circle cx="61" cy="88" r="12.4" fill="url(#lensRing)"/>
+      <circle cx="61" cy="88" r="9.2" fill="url(#lens)"/>
+      <circle cx="58" cy="85" r="2.1" fill="#ffffff" opacity="0.62"/>
+
+      <circle cx="84" cy="93" r="4.4" fill="#fef3c7" stroke="#ffffff" stroke-opacity="0.8" stroke-width="1"/>
+      <circle cx="84" cy="93" r="2.2" fill="#f59e0b" opacity="0.38"/>
+      <circle cx="42" cy="109" r="4" fill="#94a3b8" opacity="0.75"/>
+    </g>
+
+    <path d="M18 43 C18 23 30 15 48 14" stroke="#ffffff" stroke-opacity="0.78" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M181 52 C180 154 180 267 181 372" stroke="#ffffff" stroke-opacity="0.28" stroke-width="1" stroke-linecap="round"/>
+    <path d="M18 370 C22 394 38 405 66 406" stroke="#020617" stroke-opacity="0.12" stroke-width="1.3" stroke-linecap="round"/>
+  </g>
 </svg>
