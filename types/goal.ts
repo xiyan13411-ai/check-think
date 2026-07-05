@@ -1,3 +1,5 @@
+import type { WishType } from "@/lib/wish-presets";
+
 export type Goal = {
   id: string;
   name: string;
@@ -5,4 +7,5 @@ export type Goal = {
   currentAmount: number;
   totalPieces: number;
   createdAt: string;
+  wishType?: WishType;
 };
