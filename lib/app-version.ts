@@ -1,2 +1,2 @@
- export const APP_VERSION = "v4.0.0-hero-scene";
- export const APP_VERSION_LABEL = "V4 Hero Scene";
+export const APP_VERSION = "v10.0.0-earphone+png";
+export const APP_VERSION_LABEL = "V10 Earphone+PNG";
