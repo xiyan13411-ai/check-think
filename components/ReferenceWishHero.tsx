@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import type { WishType } from "@/lib/wish-presets";
 import { getWishAsset } from "@/lib/wish-assets";
@@ -86,6 +87,20 @@ export default function ReferenceWishHero({
   const shownShards = posterShards.slice(0, visibleCount);
   const completeSrc = asset.completeSrc ?? asset.src;
   const heroSrc = isComplete ? completeSrc : asset.src;
+  const srcCandidates = useMemo(
+    () => Array.from(new Set([heroSrc, asset.src, ...(asset.fallbackSrcs ?? [])])),
+    [asset.fallbackSrcs, asset.src, heroSrc],
+  );
+  const [srcIndex, setSrcIndex] = useState(0);
+  const activeSrc = srcCandidates[Math.min(srcIndex, srcCandidates.length - 1)] ?? asset.src;
+
+  useEffect(() => {
+    setSrcIndex(0);
+  }, [wishType, heroSrc]);
+
+  const handleAssetError = () => {
+    setSrcIndex((index) => Math.min(index + 1, srcCandidates.length - 1));
+  };
 
   return (
     <section className="relative mt-4 h-[440px] overflow-hidden rounded-[28px] bg-gradient-to-b from-[#fffdf8] via-[#f5efe4] to-[#e7dfd1] shadow-inner">
@@ -97,7 +112,8 @@ export default function ReferenceWishHero({
 
       <div className={`absolute left-1/2 top-[51%] -translate-x-1/2 -translate-y-1/2 ${asset.className}`}>
         <motion.img
-          src={heroSrc}
+          src={activeSrc}
+          onError={handleAssetError}
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain drop-shadow-[0_28px_38px_rgba(15,23,42,0.20)]"
@@ -139,7 +155,7 @@ export default function ReferenceWishHero({
                 className="absolute inset-0"
                 style={{
                   clipPath: shard.clipPath,
-                  backgroundImage: `url(${asset.src})`,
+                  backgroundImage: `url(${activeSrc})`,
                   backgroundSize: "100% 100%",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
