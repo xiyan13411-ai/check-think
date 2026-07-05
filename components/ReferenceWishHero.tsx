@@ -33,6 +33,8 @@ type ProductShard = {
   unlockAt: number;
 };
 
+type GenericWishType = Exclude<WishType, "macbook" | "phone">;
+
 const productAssets: Record<"macbook" | "phone", ProductAsset> = {
   macbook: {
     src: "/wish-assets/macbook/macbook-render.svg",
@@ -66,7 +68,7 @@ const productShards: ProductShard[] = [
   { id: "bottom-edge", clipPath: "polygon(19% 93%, 82% 92%, 96% 100%, 8% 100%)", x: 0, y: 246, rotate: -7, scale: 0.88, z: 44, unlockAt: 0.92 },
 ];
 
-function SimpleWishArt({ type }: { type: Exclude<WishType, "macbook" | "phone"> }) {
+function SimpleWishArt({ type }: { type: GenericWishType }) {
   const config = {
     camera: { emoji: "📷", label: "相机", bg: "from-violet-100 to-blue-100" },
     travel: { emoji: "🧳", label: "旅行", bg: "from-teal-100 to-blue-100" },
@@ -198,7 +200,7 @@ function AssetFragmentHero({ type, progress, saveAnimation, warmUpNextPiece }: {
   );
 }
 
-function GenericHero({ type, progress, saveAnimation }: { type: Exclude<WishType, "macbook" | "phone">; progress: number; saveAnimation: ReferenceWishHeroProps["saveAnimation"] }) {
+function GenericHero({ type, progress, saveAnimation }: { type: GenericWishType; progress: number; saveAnimation: ReferenceWishHeroProps["saveAnimation"] }) {
   return (
     <div className="absolute left-1/2 top-[51%] -translate-x-1/2 -translate-y-1/2">
       <motion.div initial={false} animate={saveAnimation ? { scale: [1, 1.035, 1] } : { scale: 1 }} transition={{ duration: 0.58, ease: "easeOut" }} style={{ opacity: progress <= 0 ? 0.55 : 0.78 + progress * 0.2 }}>
@@ -212,6 +214,7 @@ export default function ReferenceWishHero({ wishType, currentAmount, targetAmoun
   const progress = Math.min(currentAmount / targetAmount, 1);
   const isComplete = progress >= 1;
   const assetType = wishType === "phone" || wishType === "macbook" ? wishType : null;
+  const genericType = wishType as GenericWishType;
 
   return (
     <section className="relative mt-4 h-[440px] overflow-hidden rounded-[28px] bg-gradient-to-b from-[#fffdf8] via-[#f5f0e7] to-[#e7dfd1] shadow-inner">
@@ -224,7 +227,7 @@ export default function ReferenceWishHero({ wishType, currentAmount, targetAmoun
       {assetType ? (
         <AssetFragmentHero type={assetType} progress={progress} saveAnimation={saveAnimation} warmUpNextPiece={warmUpNextPiece} />
       ) : (
-        <GenericHero type={wishType} progress={progress} saveAnimation={saveAnimation} />
+        <GenericHero type={genericType} progress={progress} saveAnimation={saveAnimation} />
       )}
 
       {saveAnimation && (
