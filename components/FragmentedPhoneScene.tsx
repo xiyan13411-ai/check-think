@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { formatCurrency } from "@/lib/progress";
 import { phoneShards, getUnlockedShardIndices } from "@/lib/fragmented-phone-map";
+import { phoneRenderAsset } from "@/lib/wish-assets";
 
 type FragmentedPhoneSceneProps = {
   totalPieces: number;
@@ -19,7 +20,20 @@ type FragmentedPhoneSceneProps = {
   } | null;
 };
 
-const PHONE_IMG = "/wish-assets/phone/phone-render.svg";
+const PNG_SRC = phoneRenderAsset.png;
+const SVG_FALLBACK = phoneRenderAsset.fallbackSvg;
+
+/** Custom hook: load PNG, fall back to SVG on error */
+function useAssetSrc(): string {
+  const [src, setSrc] = useState(PNG_SRC);
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setSrc(PNG_SRC);
+    img.onerror = () => setSrc(SVG_FALLBACK);
+    img.src = PNG_SRC;
+  }, []);
+  return src;
+}
 
 export default function FragmentedPhoneScene({
   totalPieces,
@@ -30,11 +44,11 @@ export default function FragmentedPhoneScene({
   warmUpNextPiece = false,
   saveAnimation = null,
 }: FragmentedPhoneSceneProps) {
+  const assetSrc = useAssetSrc();
   const progress = Math.min(currentAmount / targetAmount, 1);
   const isComplete = unlockedPieces >= totalPieces;
   const unlockedIndices = useMemo(() => getUnlockedShardIndices(progress), [progress]);
 
-  // Compute just-unlocked shards based on saveAnimation trigger
   const justUnlockedShards = useMemo(() => {
     if (!saveAnimation || saveAnimation.mode !== "unlock") return [];
     const prevProgress = Math.max(0, progress - (currentAmount / targetAmount - progress));
@@ -48,7 +62,6 @@ export default function FragmentedPhoneScene({
   const nextPieceProgress = Math.min(currentPieceRemainder / pieceValue, 1);
   const amountToNextPiece = Math.ceil(pieceValue - currentPieceRemainder);
 
-  // Edge highlight config: bright gradient overlay on each shard
   const EDGE_HIGHLIGHT = "linear-gradient(135deg, rgba(255,255,255,0.50) 0%, rgba(255,255,255,0.08) 35%, transparent 55%)";
 
   return (
@@ -72,27 +85,23 @@ export default function FragmentedPhoneScene({
             {isComplete && <div className="pointer-events-none absolute -inset-4 z-0 rounded-[2.5rem] phone-soft-glow" />}
 
             <div className="relative aspect-[200/420] w-full">
-              {/* Ghost silhouette — shows phone outline even at 0% */}
               <svg viewBox="0 0 200 420" className="pointer-events-none absolute inset-0 opacity-[0.08]">
                 <rect x="15" y="15" width="170" height="390" rx="35" fill="#f8fafc" />
                 <rect x="15" y="15" width="170" height="390" rx="35" fill="none" stroke="#475569" strokeWidth="1" strokeDasharray="2.5 2.5" />
                 <rect x="30" y="38" width="65" height="85" rx="14" fill="none" stroke="#475569" strokeWidth="0.6" strokeDasharray="1.5 1.5" />
               </svg>
 
-              {/* Shard layers + edge highlights */}
               <div className="absolute inset-0">
                 {phoneShards.map((shard, i) => {
                   const unlocked = unlockedIndices.includes(i);
                   const justUnlocked = justUnlockedShards.includes(i);
-
                   return (
                     <div key={i} className="contents">
-                      {/* Main shard — clipped background image */}
                       <motion.div
                         className="absolute inset-0"
                         style={{
                           clipPath: shard.clipPath,
-                          backgroundImage: `url(${PHONE_IMG})`,
+                          backgroundImage: `url(${assetSrc})`,
                           backgroundSize: "100% 100%",
                           zIndex: shard.zIndex,
                           filter: "drop-shadow(0 4px 10px rgba(15,23,42,0.18))",
@@ -113,7 +122,6 @@ export default function FragmentedPhoneScene({
                             : { duration: 0.5, ease: "easeOut" }
                         }
                       />
-                      {/* Edge highlight overlay — glass reflection on fragment edge */}
                       <motion.div
                         className="pointer-events-none absolute inset-0"
                         style={{
@@ -131,13 +139,11 @@ export default function FragmentedPhoneScene({
                 })}
               </div>
 
-              {/* Warm glow on recently unlocked shards */}
               {justUnlockedShards.length > 0 && (
                 <div className="pointer-events-none absolute inset-0 z-30 rounded-[1.75rem] bg-gradient-to-b from-pink-200/10 via-transparent to-transparent animate-pulse" />
               )}
             </div>
 
-            {/* 100% completion overlay */}
             {isComplete && (
               <motion.div
                 className="absolute inset-0 z-40 flex items-center justify-center"
@@ -152,7 +158,6 @@ export default function FragmentedPhoneScene({
               </motion.div>
             )}
 
-            {/* 100% badge */}
             {isComplete && (
               <div className="absolute -right-1 -top-1 z-50 flex h-8 min-w-[3.5rem] items-center justify-center rounded-full bg-gradient-to-r from-pink-400 to-orange-400 px-2.5 text-[10px] font-bold text-white shadow-md">
                 已完成
@@ -161,7 +166,6 @@ export default function FragmentedPhoneScene({
           </div>
         </div>
 
-        {/* Bottom info */}
         <div className="relative z-10 px-4 pb-5">
           {!isComplete && (
             <div className="mx-auto w-full max-w-[200px] space-y-1.5 text-center">

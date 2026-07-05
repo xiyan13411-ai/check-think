@@ -12,6 +12,16 @@
 
 > 🎯 V4 小红书Hero Scene 主视觉重构（当前阶段）
 
+> 🎯 V9 AI 视觉资产接入（当前阶段）
+
+✅ public/wish-assets/phone/generated/ 目录 + README
+✅ lib/wish-assets.ts — phoneRenderAsset (PNG优先+SVG降级)
+✅ FragmentedPhoneScene — useAssetSrc() 自动检测PNG，失败回退SVG
+✅ docs/AI_ASSET_PROMPTS.md — 3组AI生图Prompt (Midjourney/DALL-E)
+✅ PNG 不存在时页面不崩溃，优雅降级到 SVG
+
+下一步：在 Midjourney/即梦中生成 phone-render.png 放入 generated 目录即可生效
+
 > 🎯 V8 参考图风格破碎重组（当前阶段）
 
 ✅ phone-render.svg 重做 — 银白机身+深蓝反光+清晰镜头模组+金属边框

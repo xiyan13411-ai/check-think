@@ -210,3 +210,17 @@
  ): number {
    return fragments.filter((f) => progress >= f.unlockAt).length / fragments.length;
  }
+ 
+ /** 
+  * Generated asset configuration with PNG priority and SVG fallback.
+  * Place phone-render.png in public/wish-assets/phone/generated/ to override the SVG.
+  */
+ export const phoneRenderAsset = {
+   png: "/wish-assets/phone/generated/phone-render.png",
+   fallbackSvg: "/wish-assets/phone/phone-render.svg",
+ };
+ 
+ export const phoneCompleteAsset = {
+   png: "/wish-assets/phone/generated/phone-complete.png",
+   fallbackSvg: "/wish-assets/phone/phone-render.svg",
+ };
