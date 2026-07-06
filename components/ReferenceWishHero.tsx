@@ -45,6 +45,28 @@ const posterShards: PosterShard[] = [
   { id: "thin-bottom", clipPath: "polygon(19% 93%, 82% 92%, 96% 100%, 8% 100%)", x: 0, y: 278, rotate: -7, scale: 0.86, z: 54 },
 ];
 
+
+function FilteredGenericLayer({ type }: { type: WishType }) {
+  const config: Record<string, { emoji: string; label: string }> = {
+    camera: { emoji: "📷", label: "相机" },
+    travel: { emoji: "🧳", label: "旅行" },
+    gift: { emoji: "🎁", label: "礼物" },
+    home: { emoji: "🏠", label: "小家" },
+    earphone: { emoji: "🎧", label: "耳机" },
+  };
+  const cfg = config[type];
+  if (!cfg) return null;
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="flex h-[280px] w-[280px] items-center justify-center rounded-[40px] bg-white/10 shadow-[0_28px_50px_rgba(15,23,42,0.12)] backdrop-blur-sm">
+        <div className="relative flex flex-col items-center gap-2">
+          <span className="text-[68px]">{cfg.emoji}</span>
+          <span className="rounded-full bg-white/80 px-4 py-0.5 text-xs font-semibold text-stone-500">{cfg.label}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
 function Sparkles() {
   return (
     <>
