@@ -9,7 +9,10 @@ export type ProductAsset = {
   liveOpacity: number;
 };
 
-const generated = (name: string) => `/wish-assets/generated/${name}-hero.png`;
+const HERO_ASSET_BASE =
+  "https://cdn.jsdelivr.net/gh/xiyan13411-ai/check-think@master/public/wish-assets/generated";
+
+const generated = (name: string) => `${HERO_ASSET_BASE}/${name}-hero.png`;
 
 const productRegistry: Partial<Record<WishType, ProductAsset>> = {
   macbook: {
