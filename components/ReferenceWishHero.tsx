@@ -45,35 +45,13 @@ const posterShards: PosterShard[] = [
   { id: "thin-bottom", clipPath: "polygon(19% 93%, 82% 92%, 96% 100%, 8% 100%)", x: 0, y: 278, rotate: -7, scale: 0.86, z: 54 },
 ];
 
-
-function FilteredGenericLayer({ type }: { type: WishType }) {
-  const config: Record<string, { emoji: string; label: string }> = {
-    camera: { emoji: "📷", label: "相机" },
-    travel: { emoji: "🧳", label: "旅行" },
-    gift: { emoji: "🎁", label: "礼物" },
-    home: { emoji: "🏠", label: "小家" },
-    earphone: { emoji: "🎧", label: "耳机" },
-  };
-  const cfg = config[type];
-  if (!cfg) return null;
-  return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="flex h-[280px] w-[280px] items-center justify-center rounded-[40px] bg-white/10 shadow-[0_28px_50px_rgba(15,23,42,0.12)] backdrop-blur-sm">
-        <div className="relative flex flex-col items-center gap-2">
-          <span className="text-[68px]">{cfg.emoji}</span>
-          <span className="rounded-full bg-white/80 px-4 py-0.5 text-xs font-semibold text-stone-500">{cfg.label}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
 function Sparkles() {
   return (
     <>
       {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
         <motion.span
           key={i}
-          className="pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.96)]"
+          className="pointer-events-none absolute z-10 h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.96)]"
           style={{ left: `${14 + i * 11}%`, top: `${22 + (i % 4) * 14}%` }}
           animate={{ opacity: [0.12, 0.95, 0.12], scale: [0.55, 1.55, 0.55] }}
           transition={{ duration: 2.1 + i * 0.16, repeat: Infinity, delay: i * 0.17, ease: "easeInOut" }}
@@ -85,7 +63,7 @@ function Sparkles() {
 
 function LightTrails() {
   return (
-    <svg className="pointer-events-none absolute left-1/2 top-[10%] -translate-x-1/2 opacity-70" width="370" height="270" viewBox="0 0 370 270" fill="none">
+    <svg className="pointer-events-none absolute left-1/2 top-[10%] z-10 -translate-x-1/2 opacity-70" width="370" height="270" viewBox="0 0 370 270" fill="none">
       <path d="M24 206C94 75 146 48 188 70C242 98 278 126 344 194" stroke="#bfdbfe" strokeWidth="1.8" />
       <path d="M10 228C94 64 158 30 214 54C268 78 306 118 356 184" stroke="#dbeafe" strokeWidth="1.1" />
       <path d="M58 214C124 118 180 96 242 132" stroke="#eff6ff" strokeWidth="2.2" opacity="0.78" />
@@ -126,25 +104,25 @@ export default function ReferenceWishHero({
 
   return (
     <section className="relative mt-4 h-[440px] overflow-hidden rounded-[28px] bg-gradient-to-b from-[#fffdf8] via-[#f5efe4] to-[#e7dfd1] shadow-inner">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(255,255,255,0.98),transparent_43%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-white/70 to-transparent" />
-      <div className="pointer-events-none absolute left-1/2 top-[84%] h-8 w-64 -translate-x-1/2 rounded-full bg-black/12 blur-xl" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_24%,rgba(255,255,255,0.98),transparent_43%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-44 bg-gradient-to-b from-white/70 to-transparent" />
+      <div className="pointer-events-none absolute left-1/2 top-[84%] z-0 h-8 w-64 -translate-x-1/2 rounded-full bg-black/12 blur-xl" />
       <Sparkles />
       <LightTrails />
 
-      <div className={`absolute left-1/2 top-[51%] -translate-x-1/2 -translate-y-1/2 ${asset.className}`}>
+      <div className={`absolute left-1/2 top-[51%] z-20 -translate-x-1/2 -translate-y-1/2 ${asset.className}`}>
         <motion.img
           src={activeSrc}
           onError={handleAssetError}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain drop-shadow-[0_28px_38px_rgba(15,23,42,0.20)]"
+          className="pointer-events-none absolute inset-0 z-20 h-full w-full select-none object-contain drop-shadow-[0_28px_38px_rgba(15,23,42,0.20)]"
           initial={false}
           animate={saveAnimation ? { scale: [1, 1.028, 1], rotate: [0, -0.6, 0] } : { scale: 1, rotate: 0 }}
           transition={{ duration: 0.58, ease: "easeOut" }}
           style={{
             opacity: isComplete ? 1 : isPristine ? asset.ghostOpacity : asset.liveOpacity,
-            filter: isComplete ? "none" : isPristine ? "grayscale(0.74) saturate(0.68)" : "grayscale(0.08)",
+            filter: isComplete ? "none" : isPristine ? "grayscale(0.38) saturate(0.9)" : "none",
           }}
         />
 
@@ -224,7 +202,7 @@ export default function ReferenceWishHero({
         </div>
       )}
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#e7dfd1] to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-20 bg-gradient-to-t from-[#e7dfd1] to-transparent" />
       {isComplete && <div className="absolute right-5 top-5 z-50 flex h-9 min-w-[4rem] items-center justify-center rounded-full bg-gradient-to-r from-pink-400 to-orange-400 px-3 text-xs font-bold text-white shadow-md">已完成</div>}
     </section>
   );
