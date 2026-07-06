@@ -1,0 +1,4 @@
+# Exclude large generated image assets from Vercel deployment
+# They are served via jsDelivr CDN instead.
+public/wish-assets/generated/*.png
+public/wish-assets/generated/*.webp
